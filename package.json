@@ -1,0 +1,28 @@
+{
+  "name": "poly-picks",
+  "version": "1.0.0",
+  "description": "A closed-economy betting service for all things Cal Poly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmuMan/stay-soft.git"
+  },
+  "author": "Stay Soft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmuMan/stay-soft/issues"
+  },
+  "homepage": "https://github.com/EmuMan/stay-soft#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "create-react-app": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
