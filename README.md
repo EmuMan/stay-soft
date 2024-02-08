@@ -1,2 +1,2 @@
 # stay-soft
-Soft men make men who are soft
+Product vision: For people who are making bets and people who are sharing betting opportunities who would like to have through gambling with fake money, the PolyPicks website is a platform that allows users to submit bets relating to Cal Poly related activities and happening and allow other users to bet on them. Unlike other gambling websites or platforms, PolyPicks goes beyond sports betting in that any Cal Poly situation can be bet on, such as the average on a certain classes test or whether someone can get off the waitlist for a certain class.
