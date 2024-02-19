@@ -22,7 +22,6 @@ const MuiBottomNavigation = () => {
   compArray.push(createNavComponent("Home"));
   compArray.push(createNavComponent("Create"));
   compArray.push(createNavComponent("Profile"));
-  console.log(value);
   return (
     <div>
       {compArray[value]}
