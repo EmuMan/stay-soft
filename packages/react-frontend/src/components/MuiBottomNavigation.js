@@ -1,36 +1,31 @@
 import {
   BottomNavigation,
   BottomNavigationAction,
-  Box,
-  Typography,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useState } from "react";
-import home from "./home.js";
+import HomePage from "./HomePage.js";
+import CreatePage from "./CreatePage.js";
+import ProfilePage from "./ProfilePage.js";
 
 const MuiBottomNavigation = () => {
-  const [value, setValue] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
   const compArray = [];
-  const createNavComponent = (text) => {
-    return (
-      <Box display="flex" justifyContent="center" key={text}>
-        <Typography variant="H5">{text}</Typography>
-      </Box>
-    );
-  };
-  compArray.push(home);
-  compArray.push(createNavComponent("Create"));
-  compArray.push(createNavComponent("Profile"));
+
+  compArray.push(HomePage());
+  compArray.push(CreatePage());
+  compArray.push(ProfilePage());
+
   return (
     <div>
-      {compArray[value]}
+      {compArray[pageIndex]}
       <BottomNavigation
         sx={{ width: "100%", position: "absolute", bottom: 0 }}
-        value={value}
+        value={pageIndex}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          setPageIndex(newValue);
         }}
         showLabels
       >
