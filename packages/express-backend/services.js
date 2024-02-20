@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import userModel from "./models/user.js";
 import betModel from "./models/bet.js";
+import { config } from 'dotenv';
+
+config();
 
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb://localhost:27017/polyPicks", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`)
   .catch((error) => console.log(error));
 
 function addUser(user) {
@@ -47,13 +47,13 @@ function addBet(bet) {
 function getBets(filter = {}) {
     let queryFilter = {};
     if (filter.user) {
-      quaryFilter.user = filter.user;
+      queryFilter.user = filter.user;
     }
     return betModel.find(queryFilter).populate('user');
 }  
 
 function findBetById(id) {
-  return betModel.findById(id).populate('userId');
+  return betModel.findById(id).populate('user');
 }
 
 function deleteBetById(id) {
