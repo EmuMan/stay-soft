@@ -1,9 +1,7 @@
 import bet from "./bet.js";
 import { Box, Typography } from "@mui/material";
-const Home = () => {
-  <Box>
-    <bet />
-  </Box>;
+const home = () => {
+  return <Typography>hi</Typography>;
 };
 
-export { Home };
+export default home;
