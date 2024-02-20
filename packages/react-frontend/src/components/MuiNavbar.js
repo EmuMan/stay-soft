@@ -1,7 +1,13 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
-import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import FlagIcon from "@mui/icons-material/Flag";
+
 const MuiNavbar = () => {
+  const pointsContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+
   return (
     <AppBar position="static">
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
@@ -18,11 +24,11 @@ const MuiNavbar = () => {
             PolyPicks
           </Typography>
         </div>
-        <Box variant="h6" component="div" id="navBarPoints">
-          <Typography variant="h6" component="div" id="label">
+        <Box variant="h6" component="div" id="navBarPoints" style={pointsContainerStyle}>
+          <Typography variant="h5" component="div" id="label">
             Points:
           </Typography>
-          <Typography variant="h6" compoenent="div" id="points">
+          <Typography variant="h5" compoenent="div" id="points">
             65
           </Typography>
         </Box>
