@@ -5,27 +5,15 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useState } from "react";
-import HomePage from "./HomePage.js";
-import CreatePage from "./CreatePage.js";
-import ProfilePage from "./ProfilePage.js";
 
-const MuiBottomNavigation = () => {
-  const [pageIndex, setPageIndex] = useState(0);
-  const compArray = [];
-
-  compArray.push(HomePage());
-  compArray.push(CreatePage());
-  compArray.push(ProfilePage());
-
+const BottomNavbar = (props) => {
   return (
     <div>
-      {compArray[pageIndex]}
       <BottomNavigation
         sx={{ width: "100%", position: "absolute", bottom: 0 }}
-        value={pageIndex}
+        value={props.initialPageIndex}
         onChange={(event, newValue) => {
-          setPageIndex(newValue);
+          props.setPageIndex(newValue);
         }}
         showLabels
       >
@@ -37,4 +25,4 @@ const MuiBottomNavigation = () => {
   );
 };
 
-export { MuiBottomNavigation };
+export { BottomNavbar };

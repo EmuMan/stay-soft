@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
 import FlagIcon from "@mui/icons-material/Flag";
 
-const MuiNavbar = () => {
+const TopBar = (props) => {
   const pointsContainerStyle = {
     display: "flex",
     flexDirection: "column",
@@ -29,7 +29,7 @@ const MuiNavbar = () => {
             Points:
           </Typography>
           <Typography variant="h5" compoenent="div" id="points">
-            65
+            {props.points}
           </Typography>
         </Box>
       </Toolbar>
@@ -37,4 +37,4 @@ const MuiNavbar = () => {
   );
 };
 
-export { MuiNavbar };
+export { TopBar };
