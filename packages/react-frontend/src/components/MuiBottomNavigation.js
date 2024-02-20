@@ -8,6 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useState } from "react";
+import { Home } from "./home.js";
 
 const MuiBottomNavigation = () => {
   const [value, setValue] = useState(0);
@@ -19,7 +20,7 @@ const MuiBottomNavigation = () => {
       </Box>
     );
   };
-  compArray.push(createNavComponent("Home"));
+  compArray.push({ Home });
   compArray.push(createNavComponent("Create"));
   compArray.push(createNavComponent("Profile"));
   return (
