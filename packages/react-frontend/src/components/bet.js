@@ -1,19 +1,16 @@
 import { Box, Typography } from "@mui/material";
 
-const Bet = () => {
-  let numberYes = 0;
-  let numberNo = 0;
-  let description = "Will Cal Poly make it to the Super Bowl";
+const Bet = (props) => {
   return (
     <Box>
       <Typography variant="h6" component="div">
-        {description}
+        {props.description}
       </Typography>
       <Typography variant="h6" component="div">
-        yes: {numberYes}
+        yes: {props.yesCount}
       </Typography>
       <Typography variant="h6" component="div">
-        no: {numberNo}
+        no: {props.noCount}
       </Typography>
     </Box>
   );
