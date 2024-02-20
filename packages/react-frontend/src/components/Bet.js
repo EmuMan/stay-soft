@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button, Stack } from "@mui/material";
 
 const Bet = (props) => {
   const betContainerStyle = {
@@ -6,10 +6,13 @@ const Bet = (props) => {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    border: "1px solid black",
-    padding: "1rem",
+    borderTop: "1px solid black",
+    borderBottom: "1px solid black",
+    padding: "1rem 0",
     margin: "1rem",
     width: "100%",
+    gap: "1rem",
+    backgroundColor: "white",
   };
 
   return (
@@ -23,6 +26,10 @@ const Bet = (props) => {
       <Typography variant="h6" component="div">
         no: {props.noCount}
       </Typography>
+      <Stack spacing={2} direction="row">
+        <Button variant="contained">Yes</Button>
+        <Button variant="contained">No</Button>
+      </Stack>
     </Box>
   );
 };
