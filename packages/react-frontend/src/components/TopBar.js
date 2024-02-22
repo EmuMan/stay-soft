@@ -5,23 +5,22 @@ import CasinoIcon from "@mui/icons-material/Casino";
 const TopBar = (props) => {
   const pointsContainerStyle = {
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
+    gap: "5px",
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-        <div id="logo">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-          >
-            <CasinoIcon />
-          </IconButton>
-          <Typography variant="h6" component="div">
+        <div
+          id="logo"
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <CasinoIcon />
+          <Typography variant="h5" component="div">
             PolyPicks
           </Typography>
         </div>

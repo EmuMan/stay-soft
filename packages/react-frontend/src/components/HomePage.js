@@ -8,17 +8,16 @@ const HomeBody = () => {
       justifyContent="top"
       alignItems="center"
       flexDirection="column"
-      style={{ backgroundColor: "lightGray" }}
+      style={{ backgroundColor: "lightGray", textTransform: "none" }}
       height="100%"
     >
-      <Typography variant="h4">Home</Typography>
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
-        marginBottom="70px"
       >
+        <Typography variant="h4">Home</Typography>
         <Bet
           yesCount={7}
           noCount={25}
