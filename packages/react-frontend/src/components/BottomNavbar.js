@@ -12,6 +12,9 @@ const BottomNavbar = (props) => {
           position: "absolute",
           bottom: 0,
           position: "fixed",
+          "& .Mui-selected, .Mui-selected > svg": {
+            color: "#007A78",
+          },
         }}
         value={props.initialPageIndex}
         onChange={(event, newValue) => {

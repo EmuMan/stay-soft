@@ -17,6 +17,7 @@ const HomeBody = () => {
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
+        marginBottom="70px"
       >
         <Bet
           yesCount={7}
