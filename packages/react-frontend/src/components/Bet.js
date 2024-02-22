@@ -27,7 +27,11 @@ const Bet = (props) => {
         no: {props.noCount}
       </Typography>
       <Stack spacing={2} direction="row">
-        <Button variant="contained" style={{ textTransform: "none" }}>
+        <Button
+          
+          variant="contained"
+          style={{ textTransform: "none" }}
+        >
           Yes
         </Button>
         <Button variant="contained" style={{ textTransform: "none" }}>

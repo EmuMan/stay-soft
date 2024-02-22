@@ -1,17 +1,21 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 
 const ProfilePage = () => {
   return (
-    <Box
+    <Stack
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        marginLeft: "20px"
       }}
     >
       <Typography variant="h4">Profile</Typography>
       <Typography variant="h6">@johnsmith</Typography>
-    </Box>
+      <Typography variant="h6">Your bets</Typography>
+      <Typography variant="h6">Number of bets: </Typography>
+      <Typography variant="h6">Accuracy: </Typography>
+      <Typography variant="h6">Settings</Typography>
+    </Stack>
   );
 };
 
