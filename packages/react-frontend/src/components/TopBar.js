@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
 import FlagIcon from "@mui/icons-material/Flag";
+import CasinoIcon from "@mui/icons-material/Casino";
 
 const TopBar = (props) => {
   const pointsContainerStyle = {
@@ -18,13 +19,18 @@ const TopBar = (props) => {
             color="inherit"
             aria-label="logo"
           >
-            <FlagIcon />
+            <CasinoIcon />
           </IconButton>
           <Typography variant="h6" component="div">
             PolyPicks
           </Typography>
         </div>
-        <Box variant="h6" component="div" id="navBarPoints" style={pointsContainerStyle}>
+        <Box
+          variant="h6"
+          component="div"
+          id="navBarPoints"
+          style={pointsContainerStyle}
+        >
           <Typography variant="h5" component="div" id="label">
             Points:
           </Typography>
