@@ -10,6 +10,15 @@ const HomeBody = () => {
       description:
         "Will Chris Caudillo run a sub-4 mile at the Big West Championship?",
     },
+    {
+      description: "Will the strike end by tomorrow?",
+    },
+    {
+      description: "Will we be on the quarter system by 2026",
+    },
+    {
+      description: "Will the new building be finished by next 2025?",
+    },
   ];
   return (
     <div
