@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Bet } from "./Bet.js";
+import { Prompt } from "./Prompt.js";
 
 const HomeBody = () => {
   return (
@@ -18,30 +18,50 @@ const HomeBody = () => {
         flexDirection="column"
       >
         <Typography variant="h4">Home</Typography>
-        <Bet
+        <Prompt
           yesCount={7}
           noCount={25}
           description="Will I get off the CSC 307 waitlist from spot 15?"
+          category="Waitlist"
+          creator="Gabe Alonso"
+          dateOpen="3/2/2024"
+          dateClose="4/2/2024"
         />
-        <Bet
+        <Prompt
           yesCount={10}
           noCount={945812}
           description="Will Cal Poly make it to the Super Bowl?"
+          category="Football"
+          creator="Aiden Smith"
+          dateOpen="1/2/2024"
+          dateClose="2/2/2024"
         />
-        <Bet
+        <Prompt
           yesCount={10}
           noCount={945812}
           description="Will Cal Poly make it to the Super Bowl?"
+          category="Football"
+          creator="Aiden Smith"
+          dateOpen="1/2/2024"
+          dateClose="2/2/2024"
         />
-        <Bet
+        <Prompt
           yesCount={10}
           noCount={945812}
           description="Will Cal Poly make it to the Super Bowl?"
+          category="Football"
+          creator="Aiden Smith"
+          dateOpen="1/2/2024"
+          dateClose="2/2/2024"
         />
-        <Bet
+        <Prompt
           yesCount={10}
           noCount={945812}
           description="Will Cal Poly make it to the Super Bowl?"
+          category="Football"
+          creator="Aiden Smith"
+          dateOpen="1/2/2024"
+          dateClose="2/2/2024"
         />
       </Box>
     </Box>
