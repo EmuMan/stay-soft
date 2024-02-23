@@ -19,11 +19,9 @@ const BottomNavbar = (props) => {
           },
         }}
         value={value}
-        // value={props.initialPageIndex}
         onChange={(event, newValue) => {
           setValue(newValue);
           props.setPageIndex(newValue);
-          // props.setPageIndex(newValue);
         }}
         showLabels
       >

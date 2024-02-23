@@ -2,12 +2,7 @@ import { Stack, Typography, TextField, Button } from "@mui/material";
 
 const CreatePage = () => {
   return (
-    <Stack
-      marginTop="20px"
-      spacing={2}
-      style={{ display: "flex", alignItems: "center" }}
-    >
-      <Typography variant="h4">Create</Typography>
+    <Stack spacing={2} style={{ display: "flex", alignItems: "center" }}>
       <TextField
         label="Question"
         id="hello"

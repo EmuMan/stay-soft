@@ -10,7 +10,7 @@ const TopBar = (props) => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="sticky">
       <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
         <div
           id="logo"

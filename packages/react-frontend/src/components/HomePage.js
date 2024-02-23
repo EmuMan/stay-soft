@@ -1,50 +1,25 @@
 import { Box, Typography } from "@mui/material";
-import { Bet } from "./Bet.js";
+import Feed from "./Feed.js";
+import Bet from "./Bet.js";
 
 const HomeBody = () => {
+  let prompts = [
+    { description: "Will Cal Poly Basketball beat Hawaii?" },
+    { description: "Will Cal Poly baseball beat Missouri?" },
+    {
+      description:
+        "Will Chris Caudillo run a sub-4 mile at the Big West Championship?",
+    },
+  ];
   return (
-    <Box
-      display="flex"
-      justifyContent="top"
-      alignItems="center"
-      flexDirection="column"
-      style={{ backgroundColor: "lightGray", textTransform: "none" }}
-      height="100%"
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
     >
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="column"
-      >
-        <Typography variant="h4">Home</Typography>
-        <Bet
-          yesCount={7}
-          noCount={25}
-          description="Will I get off the CSC 307 waitlist from spot 15?"
-        />
-        <Bet
-          yesCount={10}
-          noCount={945812}
-          description="Will Cal Poly make it to the Super Bowl?"
-        />
-        <Bet
-          yesCount={10}
-          noCount={945812}
-          description="Will Cal Poly make it to the Super Bowl?"
-        />
-        <Bet
-          yesCount={10}
-          noCount={945812}
-          description="Will Cal Poly make it to the Super Bowl?"
-        />
-        <Bet
-          yesCount={10}
-          noCount={945812}
-          description="Will Cal Poly make it to the Super Bowl?"
-        />
-      </Box>
-    </Box>
+      <Feed questions={prompts} />
+    </div>
   );
 };
 

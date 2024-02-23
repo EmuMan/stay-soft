@@ -8,7 +8,7 @@ import {
   CardMedia,
 } from "@mui/material";
 
-function Bet(prop) {
+const MuiCard = () => {
   return (
     <Box width="300px">
       <Card>
@@ -20,7 +20,12 @@ function Bet(prop) {
         ></CardMedia>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question.description}
+            React
+          </Typography>
+          <Typography variant="body2" color="text.seconary">
+            React is a JavaScript library for building user interfaces. React
+            can be used as a base in the development of single-page or mobile
+            applications.
           </Typography>
         </CardContent>
         <CardActions>
@@ -30,6 +35,6 @@ function Bet(prop) {
       </Card>
     </Box>
   );
-}
+};
 
-export default Bet;
+export { MuiCard };

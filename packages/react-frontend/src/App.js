@@ -19,7 +19,11 @@ function App() {
   return (
     <div className="App">
       <TopBar points="17" />
-      <Stack marginTop="56px" marginBottom="56px">
+      <Stack
+        padding="20px"
+        marginBottom="60px"
+        style={{ backgroundColor: "rgb(222, 227, 232)" }}
+      >
         {compArray[pageIndex]}
       </Stack>
       <BottomNavbar initialPageIndex={0} setPageIndex={setPageIndex} />

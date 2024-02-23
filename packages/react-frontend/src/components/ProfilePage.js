@@ -6,15 +6,13 @@ const ProfilePage = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        marginLeft: "20px"
+        marginLeft: "20px",
       }}
     >
-      <Typography variant="h4">Profile</Typography>
       <Typography variant="h6">@johnsmith</Typography>
       <Typography variant="h6">Your bets</Typography>
-      <Typography variant="h6">Number of bets: </Typography>
-      <Typography variant="h6">Accuracy: </Typography>
       <Typography variant="h6">Settings</Typography>
+      <Typography variant="h6">Number of Respondents</Typography>
     </Stack>
   );
 };
