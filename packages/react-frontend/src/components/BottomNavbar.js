@@ -2,8 +2,10 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useState } from "react";
 
 const BottomNavbar = (props) => {
+  const [value, setValue] = useState(0);
   return (
     <div>
       <BottomNavigation
@@ -13,11 +15,12 @@ const BottomNavbar = (props) => {
           bottom: 0,
           position: "fixed",
           "& .Mui-selected, .Mui-selected > svg": {
-            color: "#007A78",
+            color: "#primary",
           },
         }}
-        value={props.initialPageIndex}
+        value={value}
         onChange={(event, newValue) => {
+          setValue(newValue);
           props.setPageIndex(newValue);
         }}
         showLabels

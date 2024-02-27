@@ -1,41 +1,29 @@
-import { Box, Typography, Button, Stack } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  CardMedia,
+} from "@mui/material";
 
-const Bet = (props) => {
-  const betContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    borderTop: "1px solid black",
-    borderBottom: "1px solid black",
-    padding: "1rem 0",
-    margin: "1rem",
-    width: "100%",
-    gap: "1rem",
-    backgroundColor: "white",
-  };
-
+function Bet(prop) {
   return (
-    <Box style={betContainerStyle}>
-      <Typography variant="h6" component="div">
-        {props.description}
-      </Typography>
-      <Typography variant="h6" component="div">
-        yes: {props.yesCount}
-      </Typography>
-      <Typography variant="h6" component="div">
-        no: {props.noCount}
-      </Typography>
-      <Stack spacing={2} direction="row">
-        <Button variant="contained" style={{ textTransform: "none" }}>
-          Yes
-        </Button>
-        <Button variant="contained" style={{ textTransform: "none" }}>
-          No
-        </Button>
-      </Stack>
+    <Box width="300px">
+      <Card>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {prop.question.description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button variant="contained">Yes</Button>
+          <Button variant="contained">NO</Button>
+        </CardActions>
+      </Card>
     </Box>
   );
-};
+}
 
-export { Bet };
+export default Bet;
