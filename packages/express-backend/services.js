@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import userModel from "./models/user.js";
 import betModel from "./models/bet.js";
+import promptModel from "./models/prompt.js";
 import { config } from 'dotenv';
 
 // SETUP
@@ -55,11 +56,11 @@ function getBets(filter = {}) {
     if (filter.user) {
       queryFilter.user = filter.user;
     }
-    return betModel.find(queryFilter).populate('user');
+    return betModel.find(queryFilter).populate('username');
 }  
 
 function findBetById(id) {
-  return betModel.findById(id).populate('user');
+  return betModel.findById(id).populate('username');
 }
 
 function deleteBetById(id) {
