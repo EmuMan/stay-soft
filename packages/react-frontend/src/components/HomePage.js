@@ -25,6 +25,7 @@ const HomeBody = () => {
       style={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Box

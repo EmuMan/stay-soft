@@ -10,6 +10,7 @@ import ProfilePage from "./components/ProfilePage.js";
 
 function App() {
   const [pageIndex, setPageIndex] = useState(0);
+  const [bets, setBets] = useState([]);
   const compArray = [];
 
   compArray.push(HomePage());
