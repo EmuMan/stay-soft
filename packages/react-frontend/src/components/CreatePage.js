@@ -2,6 +2,7 @@ import { Stack, Typography, TextField, Button } from "@mui/material";
 
 const CreatePage = () => {
   return (
+    
     <Stack spacing={2} style={{ display: "flex", alignItems: "center" }}>
       <TextField
         label="Question"
