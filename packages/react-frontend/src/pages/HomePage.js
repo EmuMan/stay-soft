@@ -1,10 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { Prompt } from "./Prompt.js";
-import Feed from "./Feed.js";
-import Bet from "./Bet.js";
-import App from "../App.js";
+import { Prompt } from "../components/Prompt.js";
+import Feed from "../components/Feed.js";
+import Bet from "../components/Bet.js";
 
-const HomeBody = (props) => {
+function HomeBody(props) {
   return (
     <Box
       style={{
@@ -14,7 +13,7 @@ const HomeBody = (props) => {
       }}
     >
       <Feed questions={props.prompts} />
-    </div>
+    </Box>
   );
 };
 
