@@ -2,9 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { Prompt } from "../components/Prompt.js";
 import Feed from "../components/Feed.js";
 import Bet from "../components/Bet.js";
-// import App from "../App.js";
 
-const HomeBody = (props) => {
+function HomeBody(props) {
   return (
     <Box
       style={{

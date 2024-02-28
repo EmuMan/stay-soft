@@ -6,13 +6,20 @@ import { BottomNavbar } from "./components/BottomNavbar";
 import HomePage from "./pages/HomePage.js";
 import CreatePage from "./pages/CreatePage.js";
 import ProfilePage from "./pages/ProfilePage.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Navigation() {
+function Navigation(props) {
   const [pageIndex, setPageIndex] = useState(0);
   const [bets, setBets] = useState([]);
   const compArray = [];
-  const [loggedIn, setLoggIn] = useState(false);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!props.loggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const [prompts, setPrompts] = useState([
     { id: 1, description: "Will Cal Poly Basketball beat Hawaii?", creator: 1 },
@@ -30,13 +37,14 @@ function Navigation() {
     setPrompts(updated);
   }
 
+
+
   return (
     <div className="navigation">
       <TopBar points="17" />
       <Stack
         padding="20px"
         marginBottom="60px"
-        style={{ backgroundColor: "rgb(222, 227, 232)" }}
       >
         {
           [

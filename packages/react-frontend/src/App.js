@@ -1,21 +1,26 @@
 import "./App.css";
-import { Stack } from "@mui/material";
-
-import { TopBar } from "./components/TopBar";
-import { BottomNavbar } from "./components/BottomNavbar";
 import { useState } from "react";
-import HomePage from "./pages/HomePage.js";
-import CreatePage from "./pages/CreatePage.js";
-import ProfilePage from "./pages/ProfilePage.js";
 import Navigation from "./Navigation";
-import Login from "./pages/Login";
+import Login from "./pages/Login.js";
+import Signup from "./pages/Signup.js";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  // compArray.push(<HomePage prompts={prompts} removePrompt={removeOnePrompt} />);
-  // compArray.push(<CreatePage updateList={updateList} />);
-  // compArray.push(<ProfilePage/>);
+  const [loggedIn, setLogin] = useState(false);
 
-  return <Login />;
+  function onLogin() {
+    setLogin(true);
+  }
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" exact element={<Login loggedIn={loggedIn} onLogin={onLogin} />} />
+        <Route path="/navigation" element={<Navigation loggedIn={loggedIn} />} />
+        <Route path="/signup" element={<Signup onLogin={onLogin} />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

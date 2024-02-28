@@ -1,18 +1,11 @@
 import { Button, TextField, Typography } from "@mui/material";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from 'react';
 
-function Login(props) {
+function Signup(props) {
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (props.loggedIn) {
-      navigate('/navigation');
-    }
-  }, [navigate]);
 
-  function loginUser() {
+  function signupUser() {
     props.onLogin();
     navigate('/navigation');
   }
@@ -20,29 +13,35 @@ function Login(props) {
   return (
     <div className="login-form">
       <Typography variant="h5" component="div" align="center">
-        PolyPicks • Login
+        Create an account
       </Typography>
       <TextField label="Email" className="text-input"></TextField>
+      <TextField label="Username" className="text-input"></TextField>
       <TextField
         label="Password"
         type="password"
         className="text-input"
       ></TextField>
-      <Button className="elevated-button" onClick={loginUser}>
+      <TextField
+        label="Repeat password"
+        type="password"
+        className="text-input"
+      ></TextField>
+      <Button className="elevated-button" onClick={signupUser}>
         <Typography variant="h6" component="div">
-          Login
+          Signup
         </Typography>
       </Button>
       <Typography variant="h6" component="div" align="center">
-        Don't have an account?
+        Already have an account?
       </Typography>
-      <Button className="button" onClick={() => navigate('/signup')}>
+      <Button className="button" onClick={() => navigate('/')}>
         <Typography variant="h6" component="div">
-          Signup
+          Login
         </Typography>
       </Button>
     </div>
   );
 }
 
-export default Login;
+export default Signup;
