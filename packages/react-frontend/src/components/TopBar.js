@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
 import FlagIcon from "@mui/icons-material/Flag";
 import CasinoIcon from "@mui/icons-material/Casino";
+import Logo from "../components/Logo.js";
 
 const TopBar = (props) => {
   const pointsContainerStyle = {
@@ -19,10 +20,7 @@ const TopBar = (props) => {
             alignItems: "center",
           }}
         >
-          <CasinoIcon />
-          <Typography variant="h5" component="div">
-            PolyPicks
-          </Typography>
+          <Logo/>
         </div>
         <Box
           variant="h6"
