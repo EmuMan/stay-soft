@@ -9,10 +9,9 @@ const ProfilePage = () => {
         marginLeft: "20px",
       }}
     >
-      <Typography variant="h6">@johnsmith</Typography>
-      <Typography variant="h6">Your bets</Typography>
-      <Typography variant="h6">Settings</Typography>
+      <Typography variant="h6">johnsmith</Typography>
       <Typography variant="h6">Number of Respondents</Typography>
+      <Typography variant="h6">Settings</Typography>
     </Stack>
   );
 };
