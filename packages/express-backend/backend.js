@@ -105,6 +105,36 @@ app.post("/prompts", async (req, res) => {
         .catch(error => res.status(500).send(error.message));
 })
 
+app.post("/users/signup", async (req, res) => {
+    const { email, username, firstName, lastName, password } = req.body;
+
+    // Email validation
+
+    try {
+        const newUser = await services.signupUser(email, username, password, firstName, lastName);
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.post("/users/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await services.loginUser(email, password);
+        res.status(200).json(user);
+    } catch (error) {
+        if (error.message === 'No email found') {
+            res.status(404).json({ message: error.message });
+        } else if (error.message === 'Incorrect password') {
+            res.status(401).json({ message: error.message });
+        } else {
+            res.status(500).json({ message: error.message });
+        }
+    }
+})
+
 // DELETES
 
 app.delete("/users/:id", (req, res) => {
@@ -122,7 +152,7 @@ app.delete("/users/:id", (req, res) => {
 
 app.delete("/bets/:id", (req, res) => {
     const id = req.params["id"];
-    services.deleteBetsById(id)
+    services.deleteBetById(id)
         .then(result => {
             if (result) {
                 res.status(204).send();

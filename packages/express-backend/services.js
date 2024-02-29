@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import userModel from "./models/user.js";
 import betModel from "./models/bet.js";
 import promptModel from "./models/prompt.js";
+import bcrypt from "bcrypt";
 import { config } from 'dotenv';
 
 // SETUP
@@ -42,6 +43,51 @@ function findUserById(id) {
 
 function deleteUserById(id) {
   return userModel.findByIdAndDelete(id);
+}
+
+async function signupUser(email, username, password, firstName, lastName) {
+  const existingUser = await userModel.findOne({ $or: [{ email }, { username }] });
+  if (existingUser) {
+    throw new Error('User already exists with the given email or username');
+  }
+
+  const salt = await bcrypt.genSalt(+process.env.SALT);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const newUser = new userModel({
+    email,
+    username,
+    lastName,
+    firstName,
+    hashedPassword
+  });
+
+  await newUser.save();
+
+  return {
+    id: newUser._id,
+    username: newUser.username,
+    email: newUser.email
+  };
+}
+
+async function loginUser(email, password) {
+  console.log(email, password);
+  const user = await userModel.findOne({ email });
+  if (!user) {
+    throw new Error('No email found');
+  }
+  console.log(user.hashedPassword);
+  const isMatch = await bcrypt.compare(password, user.hashedPassword);
+  if (!isMatch) {
+    throw new Error('Incorrect password');
+  }
+
+  return {
+    id: user._id,
+    username: user.username,
+    email: user.email
+  };
 }
 
 // BETS
@@ -104,5 +150,7 @@ export default {
   addPrompt,
   getPrompts,
   findPromptById,
-  deletePromptById
+  deletePromptById,
+  signupUser,
+  loginUser
 };
