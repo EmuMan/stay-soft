@@ -4,8 +4,10 @@ import QuestionForm from "./QuestionForm";
 
 const CreatePage = () => {
   return (
+
     <QuestionForm/>
-  );
+    
+    );
 };
 
 export default CreatePage;
