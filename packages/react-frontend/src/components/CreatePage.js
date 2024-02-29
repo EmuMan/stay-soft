@@ -1,19 +1,10 @@
 import { Stack, Typography, TextField, Button } from "@mui/material";
 
+import QuestionForm from "./QuestionForm";
+
 const CreatePage = () => {
   return (
-    <Stack spacing={2} style={{ display: "flex", alignItems: "center" }}>
-      <TextField
-        label="Question"
-        id="hello"
-        name="sup"
-        multiline
-        style={{ width: "75%" }}
-      ></TextField>
-      <Button variant="contained" style={{ textTransform: "none" }}>
-        Post
-      </Button>
-    </Stack>
+    <QuestionForm/>
   );
 };
 
