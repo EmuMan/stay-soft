@@ -14,7 +14,7 @@ const HomeBody = (props) => {
       }}
     >
       <Feed questions={props.prompts} />
-    </div>
+    </Box>
   );
 };
 
