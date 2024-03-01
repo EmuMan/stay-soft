@@ -29,7 +29,7 @@ const TopBar = (props) => {
             alignItems: "center",
           }}
         >
-          <Logo/>
+          <Logo />
         </div>
         <Box
           variant="h6"
