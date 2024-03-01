@@ -33,7 +33,11 @@ const CreatePage = (props) => {
         name="sup"
         multiline
         style={{ width: "75%" }}
-        onChange={(e) => setQuestion(e.target.value)}
+        onChange={(e) => {
+          const newValue = e.target.value.toString().slice(0, 139);
+          e.target.value = newValue;
+          setQuestion(newValue);
+        }}
       ></TextField>
       <Button
         variant="contained"

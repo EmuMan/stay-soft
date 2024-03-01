@@ -1,7 +1,8 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Stack, Button, TextField, Typography } from "@mui/material";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import Logo from "../components/Logo.js";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ function Login(props) {
 
   return (
     <div className="login-form">
+      <Logo />
       <Typography variant="h5" component="div" align="center">
         PolyPicks • Login
       </Typography>
@@ -54,7 +56,11 @@ function Login(props) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button className="elevated-button" onClick={loginUser}>
+      <Button
+        style={{ textTransform: "none" }}
+        className="elevated-button"
+        onClick={loginUser}
+      >
         <Typography variant="h6" component="div">
           Login
         </Typography>
@@ -62,7 +68,11 @@ function Login(props) {
       <Typography variant="h6" component="div" align="center">
         Don't have an account?
       </Typography>
-      <Button className="button" onClick={() => navigate("/signup")}>
+      <Button
+        style={{ textTransform: "none" }}
+        className="button"
+        onClick={() => navigate("/signup")}
+      >
         <Typography variant="h6" component="div">
           Signup
         </Typography>
