@@ -70,9 +70,8 @@ async function signupUser(email, username, password, firstName, lastName) {
   });
 
   await newUser.save();
-
   const token = jwt.sign(
-    { id: user._id, username: user.username, email: user.email },
+    { id: newUser._id, username: newUser.username, email: newUser.email },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
@@ -94,7 +93,6 @@ async function loginUser(email, password) {
   if (!isMatch) {
     throw new Error("Incorrect password");
   }
-
   const token = jwt.sign(
     { id: user._id, username: user.username, email: user.email },
     process.env.JWT_SECRET,

@@ -22,7 +22,7 @@ function Navigation(props) {
   }, [navigate, props.loggedIn]);
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     props.setLoggedIn(false);
     navigate("/");
   };
