@@ -4,7 +4,7 @@
   "description": "A closed-economy betting service for all things Cal Poly.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Warning: no test specified\"",
     "start": "npm --prefix ./packages/react-frontend run start"
   },
   "repository": {
