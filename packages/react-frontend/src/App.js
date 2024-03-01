@@ -13,12 +13,15 @@ function App() {
   const [bets, setBets] = useState([]);
   const compArray = [];
   const [prompts, setPrompts] = useState([
-    { id: 1, description: "Will Cal Poly Basketball beat Hawaii?", creator: 1 },
-    { id: 2, description: "Will Cal Poly baseball beat Missouri?", creator: 2 },
-    { id: 3, description: "Will Chris Caudillo win?", creator: 3, open: true },
+    { id: 1, description: "Will Cal Poly Basketball beat Hawaii?", creator: "Colin", dateOpened: "1/21/24", dateClose: "2/29/24", category: "basketball", yesCount: 20, noCount: 20 },
+    { id: 2, description: "Will Cal Poly baseball beat Missouri?", creator: "Aiden", dateOpened: "1/21/24", dateClose: "2/29/24", category: "basketball", yesCount: 20, noCount: 20 },
+    { id: 3, description: "Will Chris Caudillo win?", creator: "Gabe", dateOpened: "1/21/24", dateClose: "2/29/24", category: "basketball", yesCount: 20, noCount: 20 },
   ]);
   function updateList(prompt) {
+    console.log("we inserting");
     setPrompts([...prompts, prompt]);
+    console.log("we consider insertion successful");
+    console.log(prompts);
   }
 
   function removeOnePrompt(index) {

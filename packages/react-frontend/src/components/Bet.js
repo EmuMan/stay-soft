@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import BetAmount from "./BetAmount.js";
 
-function Bet(prop) {
+function Bet(props) {
   return (
     <Box width="95%">
       <Card
@@ -29,19 +29,38 @@ function Bet(prop) {
         }}
       >
         <CardContent>
+          <Stack spacing={2} direction="row">
+            <Typography variant="h6" component="div">
+              Date Opened: {props.question.dateOpened}
+            </Typography>
+            <Typography variant="h6" component="div">
+              Date Closed: {props.question.dateClose}
+            </Typography>
+          </Stack>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question.description}
+            {props.question.description}
           </Typography>
-        </CardContent>
-        <CardActions>
-          <Box>
-            <FormControl>
-              <RadioGroup name="decision" aria-labelledby="decision-label">
-                <FormControlLabel control={<Radio />} label="Yes" value="Yes" />
-                <FormControlLabel control={<Radio />} label="No" value="No" />
-              </RadioGroup>
-            </FormControl>
-          </Box>
+          <Typography variant="h6" component="div">
+            Category: {props.question.category}
+          </Typography>
+          <Typography variant="h6" component="div">
+            Creator: {props.question.creator}
+          </Typography>
+          <Typography variant="h6" component="div">
+            yes: {props.question.yesCount}
+          </Typography>
+          <Typography variant="h6" component="div">
+            no: {props.question.noCount}
+          </Typography>
+          <Stack spacing={2} direction="row" padding={2}>
+            <Button variant="contained" style={{ textTransform: "none" }}>
+              Yes
+            </Button>
+            <Button variant="contained" style={{ textTransform: "none" }}>
+              No
+            </Button>
+
+          </Stack>
           <Stack>
             <TextField
               label="Amount"
@@ -53,7 +72,9 @@ function Bet(prop) {
             />
             <Button>Confirm</Button>
           </Stack>
-        </CardActions>
+
+        </CardContent>
+
       </Card>
     </Box>
   );
