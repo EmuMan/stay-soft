@@ -14,10 +14,10 @@ function Navigation(props) {
   const [bets, setBets] = useState([]);
   const compArray = [];
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!props.loggedIn) {
-      navigate('/');
+      navigate("/");
     }
   }, [navigate, props.loggedIn]);
 
@@ -38,18 +38,15 @@ function Navigation(props) {
   }
 
   const handleSignOut = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     props.setLoggedIn(false);
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="navigation">
-      <TopBar points="17" onSignOut = {handleSignOut} />
-      <Stack
-        padding="20px"
-        marginBottom="60px"
-      >
+      <TopBar points={props.profile.points} onSignOut={handleSignOut} />
+      <Stack padding="20px" marginBottom="60px">
         {
           [
             <HomePage prompts={prompts} removePrompt={removeOnePrompt} />,
