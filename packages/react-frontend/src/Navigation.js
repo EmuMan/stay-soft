@@ -49,8 +49,12 @@ function Navigation(props) {
       <Stack padding="20px" marginBottom="60px">
         {
           [
-            <HomePage prompts={prompts} removePrompt={removeOnePrompt} />,
-            <CreatePage updateList={updateList} />,
+            <HomePage
+              profile={props.profile}
+              prompts={props.prompts}
+              removePrompt={removeOnePrompt}
+            />,
+            <CreatePage profile={props.profile} updateList={updateList} />,
             <ProfilePage profile={props.profile} />,
           ][pageIndex]
         }

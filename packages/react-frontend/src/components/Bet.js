@@ -30,7 +30,7 @@ function Bet(prop) {
       >
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question.description}
+            {prop.question.question}
           </Typography>
         </CardContent>
         <CardActions>

@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { jwtDecode } from "jwt-decode";
 
 function App() {
+  const [prompts, setPrompts] = useState([]);
   const theme = createTheme({
     palette: {
       primary: {
@@ -18,6 +19,19 @@ function App() {
       },
     },
   });
+  function fetchPrompts() {
+    const promise = fetch("http://localhost:8000/prompts");
+    return promise;
+  }
+  useEffect(() => {
+    fetchPrompts()
+      .then((res) => res.json())
+      .then((json) => setPrompts(json))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const [profile, setProfile] = useState({
     username: "",
     points: 0,
@@ -28,6 +42,31 @@ function App() {
     bets: [],
   });
   const [loggedIn, setLoggedIn] = useState(false);
+
+  function postPrompt(prompt) {
+    const promise = fetch("http://localhost:8000/prompts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(prompt),
+    });
+    return promise;
+  }
+
+  function updatePrompts(prompt) {
+    postPrompt(prompt)
+      .then((response) => {
+        if (response.status === 201) {
+          response.json().then((responseJson) => {
+            setPrompts([...prompts, responseJson]);
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -73,6 +112,7 @@ function App() {
             element={
               <Navigation
                 profile={profile}
+                prompts={prompts}
                 loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
               />
