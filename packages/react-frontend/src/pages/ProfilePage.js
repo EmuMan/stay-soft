@@ -32,9 +32,13 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <Stack style={{ display: "flex", flexDirection: "column", marginLeft: "20px" }}>
+    <Stack style={{ display: "flex", flexDirection: "column", marginLeft: "20px", alignItems: "center" }}>
+      {/* User Icon */}
       <Typography variant="h6">{profile.username}</Typography>
-      <Typography variant="h6">{profile.points}</Typography>
+      <Typography variant="h6">Points: {profile.points}</Typography>
+      <Typography variant="h6">Bets Won: {profile.betsWon}</Typography>
+      <Typography variant="h6">Bets Lost: {profile.betsLost}</Typography>
+      <Typography variant="h6">Respondents: {profile.respondents}</Typography>
     </Stack>
   );
 };
