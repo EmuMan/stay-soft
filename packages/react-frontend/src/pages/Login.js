@@ -25,7 +25,7 @@ function Login(props) {
       });
       const data = await response.json();
       if (response.ok) {
-        props.onLogin();
+        props.onLogin(data.token);
         navigate("/navigation");
       } else {
         alert(data.message);

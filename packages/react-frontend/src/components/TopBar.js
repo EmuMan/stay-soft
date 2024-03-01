@@ -1,6 +1,7 @@
-import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Box, Button } from "@mui/material";
 import FlagIcon from "@mui/icons-material/Flag";
 import CasinoIcon from "@mui/icons-material/Casino";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const TopBar = (props) => {
   const pointsContainerStyle = {
@@ -36,6 +37,9 @@ const TopBar = (props) => {
           <Typography variant="h5" compoenent="div" id="points">
             {props.points}
           </Typography>
+          <Button color="inherit" onClick={props.onSignOut}>
+            <LogoutIcon />
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

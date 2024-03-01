@@ -41,11 +41,9 @@ function Signup(props) {
           lastName,
         }),
       });
-
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        console.log("Signup successful", data);
-        props.onLogin();
+        props.onLogin(data.token);
         navigate("/navigation");
       } else {
         const error = await response.text();

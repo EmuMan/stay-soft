@@ -19,7 +19,7 @@ function Navigation(props) {
     if (!props.loggedIn) {
       navigate('/');
     }
-  }, [navigate]);
+  }, [navigate, props.loggedIn]);
 
   const [prompts, setPrompts] = useState([
     { id: 1, description: "Will Cal Poly Basketball beat Hawaii?", creator: 1 },
@@ -37,11 +37,15 @@ function Navigation(props) {
     setPrompts(updated);
   }
 
-
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    props.setLoggedIn(false);
+    navigate('/');
+  };
 
   return (
     <div className="navigation">
-      <TopBar points="17" />
+      <TopBar points="17" onSignOut = {handleSignOut} />
       <Stack
         padding="20px"
         marginBottom="60px"

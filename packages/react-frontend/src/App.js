@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
@@ -17,11 +17,20 @@ const theme = createTheme({
 });
 
 function App() {
-  const [loggedIn, setLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  function onLogin() {
-    setLogin(true);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
+
+  const onLogin = (token) => {
+    localStorage.setItem('token', token);
+    setLoggedIn(true);
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -33,7 +42,7 @@ function App() {
           />
           <Route
             path="/navigation"
-            element={<Navigation loggedIn={loggedIn} />}
+            element={<Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
           />
           <Route path="/signup" element={<Signup onLogin={onLogin} />} />
         </Routes>
