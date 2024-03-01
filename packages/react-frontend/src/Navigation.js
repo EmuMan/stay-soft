@@ -14,43 +14,28 @@ function Navigation(props) {
   const [bets, setBets] = useState([]);
   const compArray = [];
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!props.loggedIn) {
-      navigate('/');
+      navigate("/");
     }
-  }, [navigate]);
+  }, [navigate, props.loggedIn]);
 
-  const [prompts, setPrompts] = useState([
-    { id: 1, description: "Will Cal Poly Basketball beat Hawaii?", creator: 1 },
-    { id: 2, description: "Will Cal Poly baseball beat Missouri?", creator: 2 },
-    { id: 3, description: "Will Chris Caudillo win?", creator: 3, open: true },
-  ]);
-  function updateList(prompt) {
-    setPrompts([...prompts, prompt]);
-  }
-
-  function removeOnePrompt(index) {
-    const updated = prompts.filter((prompt, i) => {
-      return i !== index;
-    });
-    setPrompts(updated);
-  }
-
-
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    props.setLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <div className="navigation">
-      <TopBar points="17" />
-      <Stack
-        padding="20px"
-        marginBottom="60px"
-      >
+      <TopBar points={props.profile.points} onSignOut={handleSignOut} />
+      <Stack padding="20px" marginBottom="60px">
         {
           [
-            <HomePage prompts={prompts} removePrompt={removeOnePrompt} />,
-            <CreatePage updateList={updateList} />,
-            <ProfilePage />,
+            <HomePage profile={props.profile} />,
+            <CreatePage profile={props.profile} />,
+            <ProfilePage profile={props.profile} />,
           ][pageIndex]
         }
       </Stack>

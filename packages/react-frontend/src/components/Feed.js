@@ -7,7 +7,14 @@ function Feed(props) {
     return <Bet key={index} question={question}></Bet>;
   });
   return (
-    <div style={{ display: "flex", gap: "20px", flexDirection: "column", alignItems: "center"}}>
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       {questions}
     </div>
   );

@@ -1,6 +1,30 @@
 import { Stack, Typography, TextField, Button } from "@mui/material";
+import { useState } from "react";
 
-const CreatePage = () => {
+const CreatePage = (props) => {
+  const [question, setQuestion] = useState("");
+  const [prompt, setPrompt] = useState({
+    question: "hello",
+    user: props.profile._id,
+    category: "sports",
+    dateOpened: new Date("2024-02-24T00:00:00.000+00:00"),
+    dateClosed: new Date("2024-02-24T00:00:00.000+00:00"),
+  });
+
+  function postPrompt() {
+    prompt.question = question;
+    if (prompt.question !== "") {
+      const promise = fetch("http://localhost:8000/prompts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prompt),
+      });
+      return promise;
+    }
+  }
+
   return (
     <Stack spacing={2} style={{ display: "flex", alignItems: "center" }}>
       <TextField
@@ -9,12 +33,17 @@ const CreatePage = () => {
         name="sup"
         multiline
         style={{ width: "75%" }}
-        // Limit prompt length to 140 characters
-        onInput={(e) => {
-          e.target.value = e.target.value.toString().slice(0, 139);
+        onChange={(e) => {
+          const newValue = e.target.value.toString().slice(0, 139);
+          e.target.value = newValue;
+          setQuestion(newValue);
         }}
       ></TextField>
-      <Button variant="contained" style={{ textTransform: "none" }}>
+      <Button
+        variant="contained"
+        style={{ textTransform: "none" }}
+        onClick={postPrompt}
+      >
         Post
       </Button>
     </Stack>
