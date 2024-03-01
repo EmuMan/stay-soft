@@ -19,9 +19,9 @@ app.get("/", authenticateUser, (req, res) => {
 });
 
 app.get("/users", authenticateUser, async (req, res) => {
-    const { username, firstName, lastName } = req.query;
+    const { username, email, firstName, lastName } = req.query;
     try {
-        const users = await services.getUsers({ username, firstName, lastName });
+        const users = await services.getUsers({ username, email, firstName, lastName });
         res.json(users);
     } catch (err) {
         res.status(500).send(err.message);
