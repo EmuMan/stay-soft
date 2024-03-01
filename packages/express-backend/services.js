@@ -3,6 +3,7 @@ import userModel from "./models/user.js";
 import betModel from "./models/bet.js";
 import promptModel from "./models/prompt.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { config } from 'dotenv';
 
 // SETUP
@@ -64,31 +65,65 @@ async function signupUser(email, username, password, firstName, lastName) {
 
   await newUser.save();
 
+  const token = jwt.sign(
+    { id: user._id, username: user.username, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+
   return {
     id: newUser._id,
     username: newUser.username,
-    email: newUser.email
+    email: newUser.email,
+    token
   };
 }
 
 async function loginUser(email, password) {
-  console.log(email, password);
   const user = await userModel.findOne({ email });
   if (!user) {
     throw new Error('No email found');
   }
-  console.log(user.hashedPassword);
   const isMatch = await bcrypt.compare(password, user.hashedPassword);
   if (!isMatch) {
     throw new Error('Incorrect password');
   }
 
+  const token = jwt.sign(
+    { id: user._id, username: user.username, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '1d' }
+  );
+
   return {
     id: user._id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    token
   };
 }
+
+function authenticateUser(req, res, next) {
+  if (process.env.NODE_ENV === 'development') {
+    return next();
+  }
+
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token received" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+    if (error) {
+      return res.status(401).json({ message: "JWT error: " + error.message });
+    }
+    req.user = decoded;
+    next();
+  });
+}
+
 
 // BETS
 
@@ -152,5 +187,6 @@ export default {
   findPromptById,
   deletePromptById,
   signupUser,
-  loginUser
+  loginUser,
+  authenticateUser
 };
