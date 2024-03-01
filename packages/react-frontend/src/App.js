@@ -1,14 +1,26 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React from "react";
-import Button from "@mui/material/Button";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import { useState } from "react";
+import Navigation from "./Navigation";
+import Login from "./pages/Login.js";
+import Signup from "./pages/Signup.js";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  return <Button variant="contained">Hello world</Button>;
+  const [loggedIn, setLogin] = useState(false);
+
+  function onLogin() {
+    setLogin(true);
+  }
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" exact element={<Login loggedIn={loggedIn} onLogin={onLogin} />} />
+        <Route path="/navigation" element={<Navigation loggedIn={loggedIn} />} />
+        <Route path="/signup" element={<Signup onLogin={onLogin} />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
