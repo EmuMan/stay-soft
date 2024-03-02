@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, Stack } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
+import { Typography, Stack } from "@mui/material";
 
 const ProfilePage = (props) => {
   return (

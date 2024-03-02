@@ -5,35 +5,31 @@ import {
   Typography,
   CardActions,
   Button,
-  CardMedia,
   TextField,
   InputAdornment,
   FormControl,
-  FormLabel,
   FormControlLabel,
   RadioGroup,
   Radio,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
-import BetAmount from "./BetAmount.js";
 
 function Bet(prop) {
   return (
-    <Box width="95%">
-      <Card
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Box width="400px">
+      <Card>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {prop.question.question}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
           <Box>
             <FormControl>
               <RadioGroup name="decision" aria-labelledby="decision-label">
@@ -44,6 +40,7 @@ function Bet(prop) {
           </Box>
           <Stack>
             <TextField
+              noWrap
               label="Amount"
               InputProps={{
                 startAdornment: (
