@@ -11,8 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 function Navigation(props) {
   const [pageIndex, setPageIndex] = useState(0);
-  const [bets, setBets] = useState([]);
-  const compArray = [];
   const navigate = useNavigate();
 
   useEffect(() => {
