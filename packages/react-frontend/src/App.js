@@ -5,7 +5,7 @@ import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { jwtDecode } from "jwt-decode";
+
 
 function App() {
   const theme = createTheme({
@@ -19,15 +19,7 @@ function App() {
     },
   });
 
-  const [profile, setProfile] = useState({
-    username: "",
-    points: 0,
-    betsWon: 0,
-    betsLost: 0,
-    respondents: 0,
-    theme: 0,
-    bets: [],
-  });
+  
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -42,23 +34,7 @@ function App() {
     setLoggedIn(true);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.id;
-      fetch(`http://localhost:8000/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setProfile(data);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  }, []);
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,7 +49,6 @@ function App() {
             path="/navigation"
             element={
               <Navigation
-                profile={profile}
                 loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
               />
