@@ -17,7 +17,7 @@ function Login(props) {
 
   async function loginUser() {
     try {
-      const response = await fetch("http://localhost:8000/users/login", {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
