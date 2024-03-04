@@ -28,7 +28,7 @@ function Signup(props) {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/users/signup", {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

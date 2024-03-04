@@ -34,7 +34,23 @@ function App() {
     setLoggedIn(true);
   };
 
-  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.id;
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setProfile(data);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
