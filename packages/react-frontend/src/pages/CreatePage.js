@@ -9,7 +9,6 @@ const CreatePage = (props) => {
     user: props.profile._id,
     category: "sports",
     dateOpened: new Date(),
-    dateClosed: new Date(),
   });
 
   function postPrompt() {
