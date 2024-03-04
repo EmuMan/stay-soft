@@ -5,7 +5,7 @@ import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { jwtDecode } from "jwt-decode";
+
 
 function App() {
   const theme = createTheme({
@@ -19,15 +19,7 @@ function App() {
     },
   });
 
-  const [profile, setProfile] = useState({
-    username: "",
-    points: 0,
-    betsWon: 0,
-    betsLost: 0,
-    respondents: 0,
-    theme: 0,
-    bets: [],
-  });
+  
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -73,7 +65,6 @@ function App() {
             path="/navigation"
             element={
               <Navigation
-                profile={profile}
                 loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
               />
