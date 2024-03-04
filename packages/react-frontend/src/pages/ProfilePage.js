@@ -1,4 +1,4 @@
-import { Box, Typography, Stack } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 import CreatorPromptsFeed from "/Users/colinmcdonald/Library/CloudStorage/GoogleDrive-1colinmcdonald@gmail.com/My Drive/college/courses/CSC/CSC 307/PolyPicks-repo/packages/react-frontend/src/components/CreatorPromptsFeeds.js";
 
