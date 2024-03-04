@@ -178,6 +178,6 @@ app.delete("/prompts/:id", authenticateUser, (req, res) => {
         .catch(error => res.status(500).send(error.message));
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
