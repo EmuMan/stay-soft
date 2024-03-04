@@ -15,7 +15,7 @@ const CreatePage = (props) => {
     prompt.question = question;
     setQuestion("");
     if (prompt.question !== "") {
-      const promise = fetch("http://localhost:8000/prompts", {
+      const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 function HomeBody(props) {
   const [prompts, setPrompts] = useState([]);
   function fetchPrompts() {
-    const promise = fetch("http://localhost:8000/prompts");
+    const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`);
     return promise;
   }
   useEffect(() => {
