@@ -139,11 +139,11 @@ function getBets(filter = {}) {
   if (filter.user) {
     queryFilter.user = filter.user;
   }
-  return betModel.find(queryFilter).populate("username");
+  return betModel.find(queryFilter).populate("user");
 }
 
 function findBetById(id) {
-  return betModel.findById(id).populate("username");
+  return betModel.findById(id).populate("user");
 }
 
 function deleteBetById(id) {
