@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Stack } from "@mui/material";
 import CreatorPrompt from "./CreatorPrompt.js"
 
 function CreatorPromptsFeed(props) {

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Feed from "../components/Feed.js";
 import { useEffect, useState } from "react";
 
-function HomeBody(props) {
+function HomeBody() {
   const [prompts, setPrompts] = useState([]);
   function fetchPrompts() {
     const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`);

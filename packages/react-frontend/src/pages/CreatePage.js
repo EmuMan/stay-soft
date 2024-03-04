@@ -3,8 +3,7 @@ import { useState } from "react";
 
 const CreatePage = (props) => {
   const [question, setQuestion] = useState("");
-  const [prompt, __setPrompt] = useState({
-    // eslint-disable-line no-unused-vars
+  const [prompt, setPrompt] = useState({ // eslint-disable-line no-unused-vars
     question: "hello",
     user: props.profile._id,
     category: "sports",
