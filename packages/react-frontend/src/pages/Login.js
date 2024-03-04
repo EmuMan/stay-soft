@@ -1,4 +1,4 @@
-import { Stack, Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ function Login(props) {
 
   async function loginUser() {
     try {
-      const response = await fetch("http://localhost:8000/users/login", {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

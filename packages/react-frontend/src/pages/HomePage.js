@@ -1,13 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import { Prompt } from "../components/Prompt.js";
+import { Box } from "@mui/material";
 import Feed from "../components/Feed.js";
-import Bet from "../components/Bet.js";
 import { useEffect, useState } from "react";
 
 function HomeBody(props) {
   const [prompts, setPrompts] = useState([]);
   function fetchPrompts() {
-    const promise = fetch("http://localhost:8000/prompts");
+    const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`);
     return promise;
   }
   useEffect(() => {

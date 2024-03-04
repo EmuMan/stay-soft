@@ -1,15 +1,11 @@
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
   Box,
   Button,
 } from "@mui/material";
-import FlagIcon from "@mui/icons-material/Flag";
-import CasinoIcon from "@mui/icons-material/Casino";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { jwtDecode } from "jwt-decode";
 import Logo from "../components/Logo.js";
 
 const TopBar = (props) => {

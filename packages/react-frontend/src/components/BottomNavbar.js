@@ -11,7 +11,6 @@ const BottomNavbar = (props) => {
       <BottomNavigation
         sx={{
           width: "100%",
-          position: "absolute",
           bottom: 0,
           position: "fixed",
           "& .Mui-selected, .Mui-selected > svg": {

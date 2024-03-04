@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - polypicks
+name: Build and deploy Node.js app to Azure Web App - polypicks-api
 
 on:
   push:
@@ -23,18 +23,20 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install --workspaces=false
+          npm run -w express-backend build --if-present
+          npm run -w express-backend test --if-present
+        working-directory: packages/express-backend
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
+        working-directory: packages/express-backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: release.zip
+          path: packages/express-backend/release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,8 +44,6 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -53,19 +53,12 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DB545E1D555A4582BEDC8F4786EE937F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1A29CCA274D04D309A322C9D9C2B592F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2255E96B906040CD8C96523EA3B5E41F }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'polypicks'
+          app-name: 'polypicks-api'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_215F01C3CE0D46F9972B9ABCD2C5DA8F }}
           package: .
-          
