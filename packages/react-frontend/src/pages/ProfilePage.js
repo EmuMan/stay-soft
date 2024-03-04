@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { Box, Typography, Stack } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 import CreatorPromptsFeed from "../components/CreatorPromptsFeeds.js";
-import { Typography, Stack } from "@mui/material";
 
 const ProfilePage = (props) => {
   const [prompts, setPrompts] = useState([]);
