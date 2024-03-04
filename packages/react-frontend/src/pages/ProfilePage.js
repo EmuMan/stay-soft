@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Stack } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
+import { Typography, Stack } from "@mui/material";
 import CreatorPromptsFeed from "/Users/colinmcdonald/Library/CloudStorage/GoogleDrive-1colinmcdonald@gmail.com/My Drive/college/courses/CSC/CSC 307/PolyPicks-repo/packages/react-frontend/src/components/CreatorPromptsFeeds.js";
 
 const ProfilePage = (props) => {
