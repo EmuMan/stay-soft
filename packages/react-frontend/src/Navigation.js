@@ -22,9 +22,11 @@ function Navigation(props) {
     theme: 0,
     bets: [],
   });
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      props.setLoggedIn(true);
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
       fetch(`http://localhost:8000/users/${userId}`, {
@@ -39,6 +41,7 @@ function Navigation(props) {
         .catch((error) => console.error("Error:", error));
     }
   }, []);
+
   useEffect(() => {
     if (!props.loggedIn) {
       navigate("/");
