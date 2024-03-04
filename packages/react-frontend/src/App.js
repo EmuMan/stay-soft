@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navigation from "./Navigation";
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";

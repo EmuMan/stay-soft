@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Stack } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
+import { Typography, Stack } from "@mui/material";
 import CreatorPromptsFeed from "../components/CreatorPromptsFeeds.js";
 
 const ProfilePage = (props) => {
   const [prompts, setPrompts] = useState([]);
-  function fetchPrompts() {
-    const promise = fetch(
-      "http://localhost:8000/prompts?user=" + props.profile["_id"]
-    );
-    return promise;
-  }
+
+  const profileId = props.profile["_id"];
   useEffect(() => {
+    const fetchPrompts = () => {
+      return fetch("http://localhost:8000/prompts?user=" + profileId);
+    };
     fetchPrompts()
       .then((res) => res.json())
       .then((json) => setPrompts(json))
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [profileId]);
+  
   return (
     <Stack
       style={{

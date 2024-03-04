@@ -23,10 +23,11 @@ function Navigation(props) {
     bets: [],
   });
 
+  const setLoggedIn = props.setLoggedIn;
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      props.setLoggedIn(true);
+      setLoggedIn(true);
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
       fetch(`http://localhost:8000/users/${userId}`, {
@@ -40,7 +41,7 @@ function Navigation(props) {
         })
         .catch((error) => console.error("Error:", error));
     }
-  }, []);
+  }, [setLoggedIn]);
 
   useEffect(() => {
     if (!props.loggedIn) {
