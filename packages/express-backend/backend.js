@@ -181,20 +181,18 @@ app.delete("/bets/:id", authenticateUser, (req, res) => {
     .catch((error) => res.status(500).send(error.message));
 });
 
-app.delete("/prompts/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"];
-  services
-    .deletePromptById(id)
-    .then((result) => {
-      if (result) {
-        res.status(204).send();
-      } else {
-        res.status(404).send("Resource not found.");
-      }
-    })
-    .catch((error) => res.status(500).send(error.message));
-});
+const id = req.params["id"];
+    services.deletePromptById(id)
+        .then(result => {
+            if (result) {
+                res.status(204).send();
+            } else {
+                res.status(404).send("Resource not found.");
+            }
+        })
+        .catch(error => res.status(500).send(error.message));
 
 app.listen(process.env.PORT || port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
+>>>>>>> main
 });
