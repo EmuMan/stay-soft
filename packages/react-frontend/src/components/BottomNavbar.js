@@ -16,6 +16,7 @@ const BottomNavbar = (props) => {
           "& .Mui-selected, .Mui-selected > svg": {
             color: "#primary",
           },
+          zIndex: "10000",
         }}
         value={value}
         onChange={(event, newValue) => {
