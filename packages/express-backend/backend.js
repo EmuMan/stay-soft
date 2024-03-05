@@ -49,7 +49,7 @@ app.get("/bets", authenticateUser, async (req, res) => {
   const { user } = req.query;
   try {
     const bets = await services.getBets({ user });
-    res.json(bets);
+    res.status(200).json(bets);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -149,6 +149,24 @@ app.post("/users/login", async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   }
+});
+
+// PUTS
+
+app.put("/prompts/:id", authenticateUser, (req, res) => {
+  const id = req.params.id;
+  const { numYes, numNo, yesPool, noPool } = req.body;
+
+  services
+  .updatePromptById(id, numYes, numNo, yesPool, noPool)
+  .then((result) => {
+      if (result) {
+        res.status(204).send();
+      } else {
+        res.status(404).send("Resource not found.");
+      }
+  })
+  .catch((error) => res.status(500).send(error.message));
 });
 
 // DELETES

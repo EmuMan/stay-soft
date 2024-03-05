@@ -1,10 +1,14 @@
 import React from "react";
-import Bet from "./Bet.js";
+import Prompt from "./Prompt.js";
 
-function Feed(props) {
-  const questions = props.questions.map((question, index) => {
-    return <Bet key={index} question={question}></Bet>;
-  });
+function Feed({ prompts }) {
+  const promptComponents = prompts.map((prompt) => (
+    <Prompt
+      key={prompt._id}
+      {...prompt}
+    />
+  ));
+
   return (
     <div
       style={{
@@ -14,7 +18,7 @@ function Feed(props) {
         alignItems: "center",
       }}
     >
-      {questions}
+      {promptComponents}
     </div>
   );
 }
