@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  points: { type: Number, default: 0 },
+  points: { type: Number, default: 100 },
   betsWon: { type: Number, default: 0 },
   betsLost: { type: Number, default: 0 },
   respondents: { type: Number, default: 0 },
