@@ -108,6 +108,7 @@ async function loginUser(email, password) {
 }
 
 function authenticateUser(req, res, next) {
+  console.log("got into authenticateUser");
   if (process.env.NODE_ENV === "development") {
     return next();
   }

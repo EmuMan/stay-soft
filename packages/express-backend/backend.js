@@ -68,6 +68,7 @@ app.get("/bets/:id", authenticateUser, async (req, res) => {
 });
 
 app.get("/prompts", authenticateUser, async (req, res) => {
+    console.log("got into GET prompts")
   const { user } = req.query;
   try {
     const prompts = await services.getPrompts({ user });
