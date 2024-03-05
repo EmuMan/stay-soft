@@ -8,7 +8,7 @@ const ProfilePage = (props) => {
   const profileId = props.profile["_id"];
   useEffect(() => {
     const fetchPrompts = () => {
-      return fetch("http://localhost:8000/prompts?user=" + profileId);
+      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts?user=` + profileId);
     };
     fetchPrompts()
       .then((res) => res.json())
