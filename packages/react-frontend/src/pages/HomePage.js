@@ -6,6 +6,7 @@ function HomeBody() {
   const [prompts, setPrompts] = useState([]);
   function fetchPrompts() {
     console.log("About to fetch prompts");
+    console.log(localStorage.getItem("token"));
     const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
