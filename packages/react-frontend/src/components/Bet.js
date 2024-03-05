@@ -5,52 +5,42 @@ import {
   Typography,
   CardActions,
   Button,
-  CardMedia,
   TextField,
   InputAdornment,
   FormControl,
-  FormLabel,
   FormControlLabel,
   RadioGroup,
   Radio,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
-import BetAmount from "./BetAmount.js";
 
 function Bet(props) {
   return (
-    <Box width="95%">
-      <Card
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Box width="400px">
+      <Card>
         <CardContent>
           <Stack spacing={2} direction="row">
             <Typography variant="h6" component="div">
               Date Opened: {props.question.dateOpened}
             </Typography>
             <Typography variant="h6" component="div">
-              Date Closed: {props.question.dateClose}
+              Date Closed: {props.question.dateClosed}
             </Typography>
           </Stack>
           <Typography gutterBottom variant="h5" component="div">
-            {props.question.description}
+            {props.question.question}
           </Typography>
           <Typography variant="h6" component="div">
             Category: {props.question.category}
           </Typography>
           <Typography variant="h6" component="div">
-            Creator: {props.question.creator}
+            Creator: {props.question.user.username}
           </Typography>
           <Typography variant="h6" component="div">
-            yes: {props.question.yesCount}
+            yes: {props.question.numYes}
           </Typography>
           <Typography variant="h6" component="div">
-            no: {props.question.noCount}
+            no: {props.question.numNo}
           </Typography>
           <Stack spacing={2} direction="row" padding={2}>
             <Button variant="contained" style={{ textTransform: "none" }}>
@@ -63,6 +53,7 @@ function Bet(props) {
           </Stack>
           <Stack>
             <TextField
+              noWrap
               label="Amount"
               InputProps={{
                 startAdornment: (
