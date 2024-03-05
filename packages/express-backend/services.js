@@ -108,14 +108,11 @@ async function loginUser(email, password) {
 }
 
 function authenticateUser(req, res, next) {
-  console.log("got into authenticateUser");
   if (process.env.NODE_ENV === "development") {
     return next();
   }
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log(authHeader)
-  console.log(token)
   if (!token) {
     return res.status(401).json({ message: "No token received" });
   }
