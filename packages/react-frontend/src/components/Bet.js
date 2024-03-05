@@ -18,6 +18,8 @@ function Bet(props) {
   return (
     <Box width="400px">
       <Card>
+    <Box width="400px">
+      <Card>
         <CardContent>
           <Stack spacing={2} direction="row">
             <Typography variant="h6" component="div">
@@ -53,6 +55,7 @@ function Bet(props) {
           </Stack>
           <Stack>
             <TextField
+              noWrap
               noWrap
               label="Amount"
               InputProps={{

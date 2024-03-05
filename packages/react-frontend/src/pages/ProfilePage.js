@@ -8,7 +8,11 @@ const ProfilePage = (props) => {
   const profileId = props.profile["_id"];
   useEffect(() => {
     const fetchPrompts = () => {
-      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts?user=` + profileId);
+      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts?user=${profileId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
     };
     fetchPrompts()
       .then((res) => res.json())

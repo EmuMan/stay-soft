@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 function HomeBody() {
   const [prompts, setPrompts] = useState([]);
   function fetchPrompts() {
-    const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`);
+    const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return promise;
   }
   useEffect(() => {
