@@ -31,19 +31,6 @@ const CreatorPrompt = (prop) => {
             {prop.question}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Box>
-            <FormControl>
-              <RadioGroup name="decision" aria-labelledby="decision-label">
-                <FormControlLabel control={<Radio />} label="Yes" value="Yes" />
-                <FormControlLabel control={<Radio />} label="No" value="No" />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Stack>
-            <Button>Confirm</Button>
-          </Stack>
-        </CardActions>
       </Card>
     </Box>
   );
