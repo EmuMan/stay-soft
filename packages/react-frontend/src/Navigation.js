@@ -30,7 +30,7 @@ function Navigation(props) {
       setLoggedIn(true);
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
-      fetch(`http://localhost:8000/users/${userId}`, {
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
