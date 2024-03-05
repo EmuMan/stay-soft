@@ -52,7 +52,7 @@ const Prompt = ({
     }
 
     try {
-      const response = fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets`, {
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
