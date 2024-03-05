@@ -49,7 +49,7 @@ app.get("/bets", authenticateUser, async (req, res) => {
   const { user } = req.query;
   try {
     const bets = await services.getBets({ user });
-    res.json(bets);
+    res.status(200).json(bets);
   } catch (err) {
     res.status(500).send(err.message);
   }

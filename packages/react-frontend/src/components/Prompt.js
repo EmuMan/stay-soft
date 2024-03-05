@@ -30,7 +30,7 @@ const Prompt = ({
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwtDecode(token);
-      setLoggedInUser(decoded._id); 
+      setLoggedInUser(decoded.id); 
     }
   }, []);
 
@@ -40,20 +40,38 @@ const Prompt = ({
   }, [yesPool, noPool]);
 
   const handleBetSubmission = (decision) => {
-    console.log(decision);
     if (!betAmount || isNaN(betAmount) || betAmount <= 0) {
       alert("Please enter a valid bet amount.");
       return;
     }
 
-    const bet = {
-      promptId: _id,
-      user: loggedInUser,
-      decision: decision,
-      amount: Number(betAmount),
-    };
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
 
-    // CREATE BET SOON
+    try {
+      const response = fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          promptId: _id,
+          user: loggedInUser,
+          decision: decision,
+          amount: Number(betAmount),
+        }),
+      });
+
+      //if (!response.ok) {
+      //  throw new Error(`HTTP error! Status: ${response.status}`);
+      //}
+    } catch (error) {
+      console.error("Error adding bet:", error);
+    }
 
     if (decision) {
       setNumYes(numYes+1);
@@ -88,16 +106,13 @@ const Prompt = ({
               numYes: numYes,
               numNo: numNo,
               yesPool: yesPool,
-              noPool: noPool
+              noPool: noPool,
             }),
           });
 
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-
-          const responseData = await response.json();
-          console.log("Update response:", responseData);
         } catch (error) {
           console.error("Error updating prompt:", error);
         }
@@ -105,7 +120,7 @@ const Prompt = ({
 
       updatePrompt().then(() => setShouldUpdate(false)); 
     }
-  }, [numYes, yesPool, shouldUpdate, _id]);
+  }, [numYes, numNo, yesPool, noPool, shouldUpdate, _id]);
 
 
   const containerStyle = {
