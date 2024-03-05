@@ -151,6 +151,24 @@ app.post("/users/login", async (req, res) => {
   }
 });
 
+// PUTS
+
+app.put("/prompts/:id", authenticateUser, (req, res) => {
+  const id = req.params.id;
+  const { numYes, numNo, yesPool, noPool } = req.body;
+
+  services
+  .updatePromptById(id, numYes, numNo, yesPool, noPool)
+  .then((result) => {
+      if (result) {
+        res.status(204).send();
+      } else {
+        res.status(404).send("Resource not found.");
+      }
+  })
+  .catch((error) => res.status(500).send(error.message));
+});
+
 // DELETES
 
 app.delete("/users/:id", authenticateUser, (req, res) => {

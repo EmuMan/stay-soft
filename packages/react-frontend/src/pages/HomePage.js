@@ -4,31 +4,34 @@ import { useEffect, useState } from "react";
 
 function HomeBody() {
   const [prompts, setPrompts] = useState([]);
-  function fetchPrompts() {
-    const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return promise;
-  }
+
   useEffect(() => {
-    fetchPrompts()
+    const fetchPrompts = () => {
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((res) => res.json())
       .then((json) => setPrompts(json))
       .catch((error) => {
         console.log(error);
       });
+    };
+
+    fetchPrompts();
   }, []);
+
   return (
     <Box
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        width: "100%",
       }}
     >
-      <Feed questions={prompts} />
+      <Feed prompts={prompts} />
     </Box>
   );
 }
