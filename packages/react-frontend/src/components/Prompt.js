@@ -1,6 +1,5 @@
 import { Box, Typography, Button, Stack, LinearProgress, Divider, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 
 const Prompt = ({ 
   _id,
@@ -16,6 +15,7 @@ const Prompt = ({
   resolution,
   comments,
   onBetPlacement,
+  loggedInUser
 }) => {
   const [numYes, setNumYes] = useState(initialNumYes);
   const [numNo, setNumNo] = useState(initialNumNo);
@@ -25,15 +25,6 @@ const Prompt = ({
   const [betAmount, setBetAmount] = useState('');
   const [shouldUpdate, setShouldUpdate] = useState(false);
   const [hasBet, setHasBet] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode(token);
-      setLoggedInUser(decoded.id); 
-    }
-  }, []);
 
   useEffect(() => {
     const totalPool = yesPool + noPool;
