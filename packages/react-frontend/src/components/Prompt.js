@@ -15,7 +15,9 @@ const Prompt = ({
   resolution,
   comments,
   onBetPlacement,
-  loggedInUser
+  loggedInUser,
+  hasBet,
+  handleBetUpdate,
 }) => {
   const [numYes, setNumYes] = useState(initialNumYes);
   const [numNo, setNumNo] = useState(initialNumNo);
@@ -24,7 +26,6 @@ const Prompt = ({
   const [yesPercentage, setYesPercentage] = useState(0);
   const [betAmount, setBetAmount] = useState('');
   const [shouldUpdate, setShouldUpdate] = useState(false);
-  const [hasBet, setHasBet] = useState(false);
 
   useEffect(() => {
     const totalPool = yesPool + noPool;
@@ -70,7 +71,7 @@ const Prompt = ({
     }
 
     setShouldUpdate(true);
-    setHasBet(true);
+    handleBetUpdate(_id);
   };
 
   useEffect(() => {
@@ -120,7 +121,6 @@ const Prompt = ({
       } catch (error) {
         console.error("Error subtracting points:", error);
       }
-      console.log("DOING IT");
       onBetPlacement(Number(betAmount));
       updatePrompt().then(() => setShouldUpdate(false)); 
     }
