@@ -15,6 +15,7 @@ const Prompt = ({
   noPool: initialNoPool,
   resolution,
   comments,
+  onBetPlacement,
 }) => {
   const [numYes, setNumYes] = useState(initialNumYes);
   const [numNo, setNumNo] = useState(initialNumNo);
@@ -65,10 +66,6 @@ const Prompt = ({
           amount: Number(betAmount),
         }),
       });
-
-      //if (!response.ok) {
-      //  throw new Error(`HTTP error! Status: ${response.status}`);
-      //}
     } catch (error) {
       console.error("Error adding bet:", error);
     }
@@ -118,9 +115,25 @@ const Prompt = ({
         }
       };
 
+      try {
+        fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${loggedInUser}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            amount: Number(betAmount),
+          }),
+        });
+      } catch (error) {
+        console.error("Error subtracting points:", error);
+      }
+      console.log("DOING IT");
+      onBetPlacement(Number(betAmount));
       updatePrompt().then(() => setShouldUpdate(false)); 
     }
-  }, [numYes, numNo, yesPool, noPool, shouldUpdate, _id]);
+  }, [numYes, numNo, yesPool, noPool, shouldUpdate, loggedInUser, betAmount, onBetPlacement, _id]);
 
 
   const containerStyle = {

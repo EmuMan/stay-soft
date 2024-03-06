@@ -1,11 +1,12 @@
 import React from "react";
 import Prompt from "./Prompt.js";
 
-function Feed({ prompts }) {
+function Feed({ prompts, onBetPlacement }) {
   const promptComponents = prompts.map((prompt) => (
     <Prompt
       key={prompt._id}
       {...prompt}
+      onBetPlacement={onBetPlacement}
     />
   ));
 
