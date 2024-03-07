@@ -174,6 +174,29 @@ function deletePromptById(id) {
   return promptModel.findByIdAndDelete(id);
 }
 
+async function updatePromptById(id, numYes, numNo, yesPool, noPool) {
+  try {
+    const oldPrompt = await promptModel.findById(id);
+
+    if (!oldPrompt) {
+      console.error('Prompt not found');
+      return null;
+    }
+
+    oldPrompt.numYes = numYes;
+    oldPrompt.numNo = numNo;
+    oldPrompt.yesPool = yesPool;
+    oldPrompt.noPool = noPool;
+
+    const updatedPrompt = await oldPrompt.save();
+    return updatedPrompt; 
+  } catch (error) {
+    console.error('Error in updatePromptById:', error);
+    throw error;
+  }
+}
+
+
 // EXPORT
 
 export default {
@@ -189,6 +212,7 @@ export default {
   getPrompts,
   findPromptById,
   deletePromptById,
+  updatePromptById,
   signupUser,
   loginUser,
   authenticateUser,
