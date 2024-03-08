@@ -107,6 +107,25 @@ async function loginUser(email, password) {
   };
 }
 
+async function updateUserById(id, amount) {
+  try {
+    const oldUser = await userModel.findById(id);
+
+    if (!oldUser) {
+      console.error('User not found');
+      return null;
+    }
+
+    oldUser.points = oldUser.points - Number(amount);
+
+    const updatedUser = await oldUser.save();
+    return updatedUser; 
+  } catch (error) {
+    console.error('Error in updateUserById:', error);
+    throw error;
+  }
+}
+
 function authenticateUser(req, res, next) {
   if (process.env.NODE_ENV === "development") {
     return next();
@@ -204,6 +223,7 @@ export default {
   getUsers,
   findUserById,
   deleteUserById,
+  updateUserById,
   addBet,
   getBets,
   findBetById,

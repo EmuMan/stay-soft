@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Feed from "../components/Feed.js";
 import { useEffect, useState } from "react";
 
-function HomeBody() {
+function HomeBody({onBetPlacement}) {
   const [prompts, setPrompts] = useState([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function HomeBody() {
         width: "100%",
       }}
     >
-      <Feed prompts={prompts} />
+      <Feed prompts={prompts} onBetPlacement={onBetPlacement} />
     </Box>
   );
 }
