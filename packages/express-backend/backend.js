@@ -169,6 +169,21 @@ app.put("/prompts/:id", authenticateUser, (req, res) => {
   .catch((error) => res.status(500).send(error.message));
 });
 
+app.put("/users/:id", authenticateUser, (req, res) => {
+  const id = req.params.id;
+  const { amount } = req.body;
+  services
+  .updateUserById(id, amount)
+  .then((result) => {
+    if (result) {
+      res.status(204).send();
+    } else {
+      res.status(404).send("Resource not found.");
+    }
+  })
+  .catch((error) => res.status(500).send(error.message));
+});
+
 // DELETES
 
 app.delete("/users/:id", authenticateUser, (req, res) => {

@@ -1,2 +1,2 @@
-# PolyPicks
+# [PolyPicks](https://orange-sky-03c89531e.5.azurestaticapps.net/)
 For people related to Cal Poly who like betting and want to engage in the Cal Poly community, PolyPicks is a virtual betting app that allows people to create bets with fake money on campus related topics. Unlike regular virtual gambling apps which focus on more mainstream topics, our product creates a consolidated gambling environment for all Cal Poly related events and activities, such as sports, classes, and clubs.

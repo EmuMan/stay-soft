@@ -1,6 +1,5 @@
 import { Box, Typography, Button, Stack, LinearProgress, Divider, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 
 const Prompt = ({ 
   _id,
@@ -15,6 +14,10 @@ const Prompt = ({
   noPool: initialNoPool,
   resolution,
   comments,
+  onBetPlacement,
+  loggedInUser,
+  hasBet,
+  handleBetUpdate,
 }) => {
   const [numYes, setNumYes] = useState(initialNumYes);
   const [numNo, setNumNo] = useState(initialNumNo);
@@ -23,16 +26,6 @@ const Prompt = ({
   const [yesPercentage, setYesPercentage] = useState(0);
   const [betAmount, setBetAmount] = useState('');
   const [shouldUpdate, setShouldUpdate] = useState(false);
-  const [hasBet, setHasBet] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode(token);
-      setLoggedInUser(decoded.id); 
-    }
-  }, []);
 
   useEffect(() => {
     const totalPool = yesPool + noPool;
@@ -65,10 +58,6 @@ const Prompt = ({
           amount: Number(betAmount),
         }),
       });
-
-      //if (!response.ok) {
-      //  throw new Error(`HTTP error! Status: ${response.status}`);
-      //}
     } catch (error) {
       console.error("Error adding bet:", error);
     }
@@ -82,7 +71,7 @@ const Prompt = ({
     }
 
     setShouldUpdate(true);
-    setHasBet(true);
+    handleBetUpdate(_id);
   };
 
   useEffect(() => {
@@ -118,9 +107,24 @@ const Prompt = ({
         }
       };
 
+      try {
+        fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${loggedInUser}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            amount: Number(betAmount),
+          }),
+        });
+      } catch (error) {
+        console.error("Error subtracting points:", error);
+      }
+      onBetPlacement(Number(betAmount));
       updatePrompt().then(() => setShouldUpdate(false)); 
     }
-  }, [numYes, numNo, yesPool, noPool, shouldUpdate, _id]);
+  }, [numYes, numNo, yesPool, noPool, shouldUpdate, loggedInUser, betAmount, onBetPlacement, _id]);
 
 
   const containerStyle = {
