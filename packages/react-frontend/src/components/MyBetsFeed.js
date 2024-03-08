@@ -8,7 +8,7 @@ function MyBetsFeed(props) {
         key={index}
         decision={bet.decision}
         amount={bet.amount}
-        question={bet.promptId}
+        question={bet.promptId.question}
       />
     );
   });
