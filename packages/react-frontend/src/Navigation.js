@@ -6,7 +6,7 @@ import { BottomNavbar } from "./components/BottomNavbar";
 import HomePage from "./pages/HomePage.js";
 import CreatePage from "./pages/CreatePage.js";
 import ProfilePage from "./pages/ProfilePage.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -22,8 +22,8 @@ function Navigation(props) {
     theme: 0,
     bets: [],
   });
-
   const setLoggedIn = props.setLoggedIn;
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -55,13 +55,20 @@ function Navigation(props) {
     navigate("/");
   };
 
+  const handleBetPlacement = useCallback((betAmount) => {
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      points: prevProfile.points - betAmount,
+    }));
+  }, []);
+
   return (
     <div className="navigation">
       <TopBar points={profile.points} onSignOut={handleSignOut} />
       <Stack padding="20px" marginBottom="60px">
         {
           [
-            <HomePage profile={profile} />,
+            <HomePage profile={profile} onBetPlacement={handleBetPlacement} />,
             <CreatePage profile={profile} />,
             <ProfilePage profile={profile} />,
           ][pageIndex]
