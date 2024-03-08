@@ -21,7 +21,10 @@
     "packages/*"
   ],
   "dependencies": {
-    "create-react-app": "^5.0.1"
+    "@mui/lab": "^5.0.0-alpha.167",
+    "@mui/x-date-pickers": "^6.19.6",
+    "create-react-app": "^5.0.1",
+    "dayjs": "^1.11.10"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
