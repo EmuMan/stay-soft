@@ -1,6 +1,8 @@
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState } from "react";
+import CreatorPromptsFeed from "./CreatorPromptsFeed.js";
+import MyBetsFeed from "./MyBetsFeed.js";
 
 const MyBetsAndPrompts = (props) => {
   const [value, setValue] = useState("1");
@@ -20,8 +22,13 @@ const MyBetsAndPrompts = (props) => {
             <Tab label="Prompts" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1">{props.prompts}</TabPanel>
-        <TabPanel value="2">{props.bets}</TabPanel>
+
+        <TabPanel value="1">
+          <MyBetsFeed bets={props.bets} />
+        </TabPanel>
+        <TabPanel value="2">
+          <CreatorPromptsFeed prompts={props.prompts} />
+        </TabPanel>
       </TabContext>
     </Box>
   );

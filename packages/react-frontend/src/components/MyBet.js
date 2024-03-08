@@ -26,11 +26,16 @@ const MyBet = (prop) => {
           <Typography gutterBottom variant="h5" component="div">
             {prop.question}
           </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            {prop.amount.toString()}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            {prop.decision.toString()}
+          </Typography>
         </CardContent>
-        
       </Card>
     </Box>
   );
 };
 
-export default CreatorPrompt;
+export default MyBet;

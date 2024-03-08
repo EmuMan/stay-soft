@@ -9,11 +9,14 @@ const ProfilePage = (props) => {
   const profileId = props.profile["_id"];
   useEffect(() => {
     const fetchPrompts = () => {
-      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts?user=${profileId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      return fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}/prompts?user=${profileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     };
     fetchPrompts()
       .then((res) => res.json())
@@ -25,11 +28,14 @@ const ProfilePage = (props) => {
 
   useEffect(() => {
     const fetchBets = () => {
-      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets?user=${profileId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      return fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}/bets?user=${profileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     };
     fetchBets()
       .then((res) => res.json())
@@ -39,7 +45,6 @@ const ProfilePage = (props) => {
       });
   }, [profileId]);
 
-  
   return (
     <Stack
       style={{
@@ -57,7 +62,7 @@ const ProfilePage = (props) => {
       <Typography variant="h6">
         Respondents: {props.profile.respondents}
       </Typography>
-      <CreatorPromptsFeed prompts={prompts} />
+      <MyBetsAndPrompts bets={bets} prompts={prompts} />
     </Stack>
   );
 };
