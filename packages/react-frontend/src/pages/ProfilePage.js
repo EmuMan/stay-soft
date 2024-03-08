@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
-import CreatorPromptsFeed from "../components/CreatorPromptsFeed.js";
 import MyBetsAndPrompts from "../components/MyBetsAndPrompts.js";
 
 const ProfilePage = (props) => {
