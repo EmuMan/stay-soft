@@ -145,6 +145,15 @@ function authenticateUser(req, res, next) {
 // BETS
 
 async function addBet(reqUser, bet) {
+  const existingBet = await betModel.findOne({
+    user: bet.user,
+    promptId: bet.promptId,
+  });
+  
+  if (existingBet) {
+    throw new Error("User already placed a bet on this prompt");
+  }
+
   const newBet = new betModel(bet);
 
   const prompt = await promptModel.findById(bet.promptId);
@@ -158,7 +167,14 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  console.log(user._id, reqUser.id);
+  if (prompt.closed) {
+    throw new Error("Prompt already closed");
+  }
+
+  if (prompt.user.id === reqUser.id) {
+    throw new Error("Cannot bet on own prompt");
+  }
+
   if (user.id !== reqUser.id) {
     throw new Error("User not authorized to place bet");
   }
