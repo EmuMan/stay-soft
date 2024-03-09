@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 function HomeBody(props) {
   const [prompts, setPrompts] = useState([]);
-  const profileId = props.profile["_id"];
 
   useEffect(() => {
     const fetchPrompts = () => {
