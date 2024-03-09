@@ -64,7 +64,7 @@ function Navigation(props) {
 
   return (
     <div className="navigation">
-      <TopBar points={profile.points} onSignOut={handleSignOut} />
+      <TopBar points={Math.round(profile.points)} onSignOut={handleSignOut} />
       <Stack padding="20px" marginBottom="60px">
         {
           [

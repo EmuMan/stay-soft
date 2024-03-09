@@ -55,7 +55,9 @@ const ProfilePage = (props) => {
     >
       {/* User Icon */}
       <Typography variant="h6">{props.profile.username}</Typography>
-      <Typography variant="h6">Points: {props.profile.points}</Typography>
+      <Typography variant="h6">
+        Points: {Math.round(props.profile.points)}
+      </Typography>
       <Typography variant="h6">Bets Won: {props.profile.betsWon}</Typography>
       <Typography variant="h6">Bets Lost: {props.profile.betsLost}</Typography>
       <Typography variant="h6">
