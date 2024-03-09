@@ -3,7 +3,8 @@ import CreatorPrompt from "./CreatorPrompt.js"
 
 function CreatorPromptsFeed(props) {
   const questions = props.prompts.map((prompt, index) => {
-    return <CreatorPrompt key={index} question={prompt.question} />;
+    console.warn(prompt);
+    return <CreatorPrompt key={index} prompt={prompt} />;
   });
   return (
     <div
@@ -12,6 +13,7 @@ function CreatorPromptsFeed(props) {
         gap: "20px",
         flexDirection: "column",
         alignItems: "center",
+        minWidth: "400px"
       }}
     >
       {questions}
