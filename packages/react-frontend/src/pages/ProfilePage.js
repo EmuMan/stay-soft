@@ -55,18 +55,28 @@ const ProfilePage = (props) => {
     >
       {/* User Icon */}
       <Typography variant="h5">{props.profile.username}</Typography>
-      <Card style={{margin: "20px 0", padding: "20px"}}>
+      <Card style={{ margin: "20px 0", padding: "20px" }}>
         <CardContent>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            minWidth: "320px",
-            // alignItems: "center",
-          }}>
-          <Typography variant="h6">Points: {props.profile.points}</Typography>
-          <Typography variant="h6">Bets Won: {props.profile.betsWon}</Typography>
-          <Typography variant="h6">Bets Lost: {props.profile.betsLost}</Typography>
-          <Typography variant="h6">Respondents: {props.profile.respondents}</Typography>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              minWidth: "320px",
+              // alignItems: "center",
+            }}
+          >
+            <Typography variant="h6">
+              Points: {Math.round(props.profile.points)}
+            </Typography>
+            <Typography variant="h6">
+              Bets Won: {props.profile.betsWon}
+            </Typography>
+            <Typography variant="h6">
+              Bets Lost: {props.profile.betsLost}
+            </Typography>
+            <Typography variant="h6">
+              Respondents: {props.profile.respondents}
+            </Typography>
           </div>
         </CardContent>
       </Card>
