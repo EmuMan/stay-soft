@@ -6,9 +6,7 @@ function MyBetsFeed(props) {
     return (
       <MyBet
         key={index}
-        decision={bet.decision}
-        amount={bet.amount}
-        question={bet.promptId.question}
+        bet={bet}
       />
     );
   });

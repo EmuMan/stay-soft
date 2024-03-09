@@ -1,9 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 const MyBet = (prop) => {
   return (
@@ -17,13 +12,13 @@ const MyBet = (prop) => {
       >
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question}
+            {prop.bet.promptId.question}
           </Typography>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.amount.toString()}
+            {prop.bet.amount.toString()}
           </Typography>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.decision.toString()}
+            {prop.bet.decision.toString()}
           </Typography>
         </CardContent>
       </Card>
