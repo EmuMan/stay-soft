@@ -25,7 +25,6 @@ const Prompt = ({
   const [noPool, setNoPool] = useState(initialNoPool);
   const [yesPercentage, setYesPercentage] = useState(0);
   const [betAmount, setBetAmount] = useState('');
-  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   useEffect(() => {
     const totalPool = yesPool + noPool;
@@ -57,74 +56,24 @@ const Prompt = ({
           decision: decision,
           amount: Number(betAmount),
         }),
+      }).then(response => {
+        if (response.ok) {
+          if (decision) {
+            setNumYes(numYes + 1);
+            setYesPool(yesPool + Number(betAmount));
+          } else {
+            setNumNo(numNo + 1);
+            setNoPool(noPool + Number(betAmount));
+          }
+      
+          handleBetUpdate(_id);
+          onBetPlacement(Number(betAmount));
+        }
       });
     } catch (error) {
       console.error("Error adding bet:", error);
     }
-
-    if (decision) {
-      setNumYes(numYes+1);
-      setYesPool(yesPool+Number(betAmount));
-    } else {
-      setNumNo(numNo+1);
-      setNoPool(noPool+Number(betAmount));
-    }
-
-    setShouldUpdate(true);
-    handleBetUpdate(_id);
   };
-
-  useEffect(() => {
-    if (shouldUpdate) {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("No token found");
-        setShouldUpdate(false);
-        return;
-      }
-
-      const updatePrompt = async () => {
-        try {
-          const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts/${_id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              numYes: numYes,
-              numNo: numNo,
-              yesPool: yesPool,
-              noPool: noPool,
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-        } catch (error) {
-          console.error("Error updating prompt:", error);
-        }
-      };
-
-      try {
-        fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${loggedInUser}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            amount: Number(betAmount),
-          }),
-        });
-      } catch (error) {
-        console.error("Error subtracting points:", error);
-      }
-      onBetPlacement(Number(betAmount));
-      updatePrompt().then(() => setShouldUpdate(false)); 
-    }
-  }, [numYes, numNo, yesPool, noPool, shouldUpdate, loggedInUser, betAmount, onBetPlacement, _id]);
 
 
   const containerStyle = {
