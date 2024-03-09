@@ -112,16 +112,16 @@ async function updateUserById(id, amount) {
     const oldUser = await userModel.findById(id);
 
     if (!oldUser) {
-      console.error('User not found');
+      console.error("User not found");
       return null;
     }
 
     oldUser.points = oldUser.points - Number(amount);
 
     const updatedUser = await oldUser.save();
-    return updatedUser; 
+    return updatedUser;
   } catch (error) {
-    console.error('Error in updateUserById:', error);
+    console.error("Error in updateUserById:", error);
     throw error;
   }
 }
@@ -204,7 +204,7 @@ function getBets(filter = {}) {
   if (filter.user) {
     queryFilter.user = filter.user;
   }
-  return betModel.find(queryFilter).populate("user");
+  return betModel.find(queryFilter).populate("user").populate("promptId");
 }
 
 function findBetById(id) {
@@ -262,11 +262,10 @@ async function updatePromptById(id, reqUser, closed) {
     await oldPrompt.save();
     return 204;
   } catch (error) {
-    console.error('Error in updatePromptById:', error);
+    console.error("Error in updatePromptById:", error);
     throw error;
   }
 }
-
 
 // EXPORT
 

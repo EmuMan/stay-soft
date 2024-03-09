@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
-import CreatorPromptsFeed from "../components/CreatorPromptsFeed.js";
+import MyBetsAndPrompts from "../components/MyBetsAndPrompts.js";
 
 const ProfilePage = (props) => {
   const [prompts, setPrompts] = useState([]);
-
+  const [bets, setBets] = useState([]);
   const profileId = props.profile["_id"];
   useEffect(() => {
     const fetchPrompts = () => {
-      return fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts?user=${profileId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      return fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}/prompts?user=${profileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     };
     fetchPrompts()
       .then((res) => res.json())
@@ -21,7 +24,26 @@ const ProfilePage = (props) => {
         console.log(error);
       });
   }, [profileId]);
-  
+
+  useEffect(() => {
+    const fetchBets = () => {
+      return fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}/bets?user=${profileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    };
+    fetchBets()
+      .then((res) => res.json())
+      .then((json) => setBets(json))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [profileId]);
+
   return (
     <Stack
       style={{
@@ -39,7 +61,7 @@ const ProfilePage = (props) => {
       <Typography variant="h6">
         Respondents: {props.profile.respondents}
       </Typography>
-      <CreatorPromptsFeed prompts={prompts} />
+      <MyBetsAndPrompts bets={bets} prompts={prompts} />
     </Stack>
   );
 };
