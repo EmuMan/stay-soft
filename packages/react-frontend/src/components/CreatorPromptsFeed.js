@@ -3,7 +3,6 @@ import CreatorPrompt from "./CreatorPrompt.js"
 
 function CreatorPromptsFeed(props) {
   const questions = props.prompts.map((prompt, index) => {
-    console.warn(prompt);
     return <CreatorPrompt key={index} prompt={prompt} />;
   });
   return (
