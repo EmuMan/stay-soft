@@ -127,9 +127,6 @@ async function updateUserById(id, amount) {
 }
 
 function authenticateUser(req, res, next) {
-  if (process.env.NODE_ENV === "development") {
-    return next();
-  }
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
@@ -147,8 +144,58 @@ function authenticateUser(req, res, next) {
 
 // BETS
 
-function addBet(bet) {
+async function addBet(reqUser, bet) {
+  const existingBet = await betModel.findOne({
+    user: bet.user,
+    promptId: bet.promptId,
+  });
+  
+  if (existingBet) {
+    throw new Error("User already placed a bet on this prompt");
+  }
+
   const newBet = new betModel(bet);
+
+  const prompt = await promptModel.findById(bet.promptId);
+  const user = await userModel.findById(bet.user);
+
+  if (!prompt) {
+    throw new Error("Prompt not found");
+  }
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (prompt.closed) {
+    throw new Error("Prompt already closed");
+  }
+
+  if (prompt.user.id === reqUser.id) {
+    throw new Error("Cannot bet on own prompt");
+  }
+
+  if (user.id !== reqUser.id) {
+    throw new Error("User not authorized to place bet");
+  }
+
+  if (user.points < newBet.amount) {
+    throw new Error("User does not have enough points to place bet");
+  }
+
+
+  if (newBet.decision) {
+    prompt.numYes += 1;
+    prompt.yesPool += newBet.amount;
+  } else {
+    prompt.numNo += 1;
+    prompt.noPool += newBet.amount;
+  }
+
+  user.points -= newBet.amount;
+
+  await user.save();
+  await prompt.save();
   return newBet.save();
 }
 
@@ -191,22 +238,29 @@ function deletePromptById(id) {
   return promptModel.findByIdAndDelete(id);
 }
 
-async function updatePromptById(id, numYes, numNo, yesPool, noPool) {
+async function updatePromptById(id, reqUser, closed) {
   try {
     const oldPrompt = await promptModel.findById(id);
 
     if (!oldPrompt) {
-      console.error("Prompt not found");
-      return null;
+      console.error('Prompt not found');
+      return 404;
     }
 
-    oldPrompt.numYes = numYes;
-    oldPrompt.numNo = numNo;
-    oldPrompt.yesPool = yesPool;
-    oldPrompt.noPool = noPool;
+    if (reqUser.id !== oldPrompt.user.id) {
+      console.error('User not authorized to update prompt');
+      return 403;
+    }
 
-    const updatedPrompt = await oldPrompt.save();
-    return updatedPrompt;
+    if (oldPrompt.closed) {
+      console.error('Prompt already closed');
+      return 403;
+    }
+
+    oldPrompt.closed = closed;
+
+    await oldPrompt.save();
+    return 204;
   } catch (error) {
     console.error("Error in updatePromptById:", error);
     throw error;
