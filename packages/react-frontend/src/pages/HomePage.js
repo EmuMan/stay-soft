@@ -2,8 +2,9 @@ import { Box } from "@mui/material";
 import Feed from "../components/Feed.js";
 import { useEffect, useState } from "react";
 
-function HomeBody({onBetPlacement}) {
+function HomeBody(props) {
   const [prompts, setPrompts] = useState([]);
+  const profileId = props.profile["_id"];
 
   useEffect(() => {
     const fetchPrompts = () => {
@@ -12,11 +13,11 @@ function HomeBody({onBetPlacement}) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => res.json())
-      .then((json) => setPrompts(json))
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => res.json())
+        .then((json) => setPrompts(json))
+        .catch((error) => {
+          console.log(error);
+        });
     };
 
     fetchPrompts();
@@ -31,7 +32,7 @@ function HomeBody({onBetPlacement}) {
         width: "100%",
       }}
     >
-      <Feed prompts={prompts} onBetPlacement={onBetPlacement} />
+      <Feed prompts={prompts} onBetPlacement={props.onBetPlacement} />
     </Box>
   );
 }
