@@ -171,9 +171,7 @@ function deleteBetById(id) {
 // PROMPTS
 
 function addPrompt(prompt) {
-  console.log(prompt);
   const newPrompt = new promptModel(prompt);
-  console.log(newPrompt);
   return newPrompt.save();
 }
 

@@ -13,6 +13,7 @@ const CreatePage = (props) => {
     question: question,
     user: props.profile._id,
     category: category,
+    dateOpened: new Date(),
     dateClosed: new Date(),
   });
 
@@ -76,7 +77,7 @@ const CreatePage = (props) => {
         </DemoContainer>
       </LocalizationProvider>
 
-      
+
       <Button
         variant="contained"
         style={{ textTransform: "none" }}
