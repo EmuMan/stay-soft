@@ -102,7 +102,7 @@ app.post("/users", authenticateUser, (req, res) => {
 app.post("/bets", authenticateUser, async (req, res) => {
   const betToAdd = req.body;
   services
-    .addBet(betToAdd)
+    .addBet(req.user, betToAdd)
     .then((addedBet) => res.status(201).send(addedBet))
     .catch((error) => res.status(500).send(error.message));
 });
@@ -155,31 +155,18 @@ app.post("/users/login", async (req, res) => {
 
 app.put("/prompts/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
-  const { numYes, numNo, yesPool, noPool } = req.body;
+  const { closed } = req.body;
 
   services
-  .updatePromptById(id, numYes, numNo, yesPool, noPool)
+  .updatePromptById(id, req.user, closed)
   .then((result) => {
-      if (result) {
+      if (result === 204) {
         res.status(204).send();
-      } else {
+      } else if (result === 403) {
+        res.status(403).send("Forbidden.");
+      } else if (result === 404) {
         res.status(404).send("Resource not found.");
       }
-  })
-  .catch((error) => res.status(500).send(error.message));
-});
-
-app.put("/users/:id", authenticateUser, (req, res) => {
-  const id = req.params.id;
-  const { amount } = req.body;
-  services
-  .updateUserById(id, amount)
-  .then((result) => {
-    if (result) {
-      res.status(204).send();
-    } else {
-      res.status(404).send("Resource not found.");
-    }
   })
   .catch((error) => res.status(500).send(error.message));
 });
