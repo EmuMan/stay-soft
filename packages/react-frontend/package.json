@@ -16,7 +16,11 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "jwt-decode": "^4.0.0",
+    "@mui/lab": "^5.0.0-alpha.167",
+    "@mui/x-date-pickers": "^6.19.6",
+    "dayjs": "^1.11.10"
   },
   "scripts": {
     "start": "react-scripts start",
