@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, Card, CardContent } from "@mui/material";
 import MyBetsAndPrompts from "../components/MyBetsAndPrompts.js";
 
 const ProfilePage = (props) => {
@@ -54,15 +54,32 @@ const ProfilePage = (props) => {
       }}
     >
       {/* User Icon */}
-      <Typography variant="h6">{props.profile.username}</Typography>
-      <Typography variant="h6">
-        Points: {Math.round(props.profile.points)}
-      </Typography>
-      <Typography variant="h6">Bets Won: {props.profile.betsWon}</Typography>
-      <Typography variant="h6">Bets Lost: {props.profile.betsLost}</Typography>
-      <Typography variant="h6">
-        Respondents: {props.profile.respondents}
-      </Typography>
+      <Typography variant="h5">{props.profile.username}</Typography>
+      <Card style={{ margin: "20px 0", padding: "20px" }}>
+        <CardContent>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              minWidth: "320px",
+              // alignItems: "center",
+            }}
+          >
+            <Typography variant="h6">
+              Points: {Math.round(props.profile.points)}
+            </Typography>
+            <Typography variant="h6">
+              Bets Won: {props.profile.betsWon}
+            </Typography>
+            <Typography variant="h6">
+              Bets Lost: {props.profile.betsLost}
+            </Typography>
+            <Typography variant="h6">
+              Respondents: {props.profile.respondents}
+            </Typography>
+          </div>
+        </CardContent>
+      </Card>
       <MyBetsAndPrompts bets={bets} prompts={prompts} />
     </Stack>
   );

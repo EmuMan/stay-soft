@@ -22,4 +22,6 @@
 
 body {
   background-color: #efefef;
+  --primary: #154734;
+  --secondary: #BD8B13;
 }
