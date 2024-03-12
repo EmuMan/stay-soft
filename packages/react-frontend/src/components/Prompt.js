@@ -68,8 +68,10 @@ const Prompt = ({
       
           handleBetUpdate(_id);
           onBetPlacement(Number(betAmount));
+        } else {
+          response.text().then((error) => alert(error));
         }
-      });
+      }).catch((error) => alert(error));
     } catch (error) {
       console.error("Error adding bet:", error);
     }
