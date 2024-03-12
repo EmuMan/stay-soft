@@ -43,6 +43,7 @@ const CreatorPrompt = (prop) => {
         });
       const winningBets = bets.filter((bet) => bet.decision === result);
       // use patch to update each user's points
+      
     }
   };
   const handleChange = (event) => {
