@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Stack, LinearProgress, Divider, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 
-const Prompt = ({ 
+const Prompt = ({
   _id,
   question,
   user,
@@ -25,7 +25,6 @@ const Prompt = ({
   const [noPool, setNoPool] = useState(initialNoPool);
   const [yesPercentage, setYesPercentage] = useState(0);
   const [betAmount, setBetAmount] = useState('');
-  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   useEffect(() => {
     const totalPool = yesPool + noPool;
@@ -57,74 +56,25 @@ const Prompt = ({
           decision: decision,
           amount: Number(betAmount),
         }),
+      }).then(response => {
+        if (response.ok) {
+          if (decision) {
+            setNumYes(numYes + 1);
+            setYesPool(yesPool + Number(betAmount));
+          } else {
+            setNumNo(numNo + 1);
+            setNoPool(noPool + Number(betAmount));
+          }
+      
+          handleBetUpdate(_id);
+          onBetPlacement(Number(betAmount));
+        }
       });
     } catch (error) {
       console.error("Error adding bet:", error);
     }
 
-    if (decision) {
-      setNumYes(numYes+1);
-      setYesPool(yesPool+Number(betAmount));
-    } else {
-      setNumNo(numNo+1);
-      setNoPool(noPool+Number(betAmount));
-    }
-
-    setShouldUpdate(true);
-    handleBetUpdate(_id);
   };
-
-  useEffect(() => {
-    if (shouldUpdate) {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("No token found");
-        setShouldUpdate(false);
-        return;
-      }
-
-      const updatePrompt = async () => {
-        try {
-          const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts/${_id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              numYes: numYes,
-              numNo: numNo,
-              yesPool: yesPool,
-              noPool: noPool,
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-        } catch (error) {
-          console.error("Error updating prompt:", error);
-        }
-      };
-
-      try {
-        fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/${loggedInUser}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            amount: Number(betAmount),
-          }),
-        });
-      } catch (error) {
-        console.error("Error subtracting points:", error);
-      }
-      onBetPlacement(Number(betAmount));
-      updatePrompt().then(() => setShouldUpdate(false)); 
-    }
-  }, [numYes, numNo, yesPool, noPool, shouldUpdate, loggedInUser, betAmount, onBetPlacement, _id]);
 
 
   const containerStyle = {
@@ -150,8 +100,19 @@ const Prompt = ({
     fontSize: "0.9rem",
   });
 
+  const formattedOpen = new Date(dateOpened).toLocaleDateString();
+  const formattedClosed = new Date(dateClosed).toLocaleDateString();
+
   return (
     <Box style={containerStyle}>
+      <Stack spacing={2} direction="row">
+        <Typography variant="h6" component="div">
+          Date Opened: {formattedOpen}
+        </Typography>
+        <Typography variant="h6" component="div">
+          Date Closed: {formattedClosed}
+        </Typography>
+      </Stack>
       <Typography variant="h5" gutterBottom>
         {question}
       </Typography>
@@ -164,17 +125,17 @@ const Prompt = ({
         <Typography variant="body2">No! {numNo.toLocaleString()}</Typography>
       </Stack>
       {(numYes > 0 || numNo > 0) ? (
-      <Box position="relative" display="flex" alignItems="center">
-        <LinearProgress 
-          variant="determinate" 
-          value={yesPercentage} 
-          style={{ ...progressBarStyle, width: '100%' }} 
-        />
-        <Box position="absolute" width="100%" display="flex" justifyContent="space-between">
-          <Typography style={progressValueStyle(yesPercentage)}>{yesPercentage.toFixed(0)}%</Typography>
-          <Typography style={progressValueStyle(100 - yesPercentage)}>{(100 - yesPercentage).toFixed(0)}%</Typography>
+        <Box position="relative" display="flex" alignItems="center">
+          <LinearProgress
+            variant="determinate"
+            value={yesPercentage}
+            style={{ ...progressBarStyle, width: '100%' }}
+          />
+          <Box position="absolute" width="100%" display="flex" justifyContent="space-between">
+            <Typography style={progressValueStyle(yesPercentage)}>{yesPercentage.toFixed(0)}%</Typography>
+            <Typography style={progressValueStyle(100 - yesPercentage)}>{(100 - yesPercentage).toFixed(0)}%</Typography>
+          </Box>
         </Box>
-      </Box>
       ) : (
         <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
           No votes yet
@@ -182,29 +143,29 @@ const Prompt = ({
       )}
       {
         loggedInUser && user && loggedInUser === user ?
-        <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
-          You cannot vote on your own prompt.
-        </Typography>
-        : !hasBet ?
-        <>
-          <TextField 
-            label="Bet Amount" 
-            type="number"
-            value={betAmount}
-            onChange={(e) => setBetAmount(e.target.value)}
-            variant="outlined" 
-            size="small" 
-            fullWidth 
-          />
-          <Stack direction="row" spacing={2} justifyContent="space-between" marginTop="10px">
-            <Button variant="contained" color="primary" onClick={() => handleBetSubmission(true)}>Yes!</Button>
-            <Button variant="contained" color="secondary" onClick={() => handleBetSubmission(false)}>No!</Button>
-          </Stack>
-        </>
-        :
-        <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
-          You've already bet on this prompt.
-        </Typography>
+          <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
+            You cannot vote on your own prompt.
+          </Typography>
+          : !hasBet ?
+            <>
+              <TextField
+                label="Bet Amount"
+                type="number"
+                value={betAmount}
+                onChange={(e) => setBetAmount(e.target.value)}
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
+              <Stack direction="row" spacing={2} justifyContent="space-between" marginTop="10px">
+                <Button variant="contained" color="primary" onClick={() => handleBetSubmission(true)}>Yes!</Button>
+                <Button variant="contained" color="secondary" onClick={() => handleBetSubmission(false)}>No!</Button>
+              </Stack>
+            </>
+            :
+            <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
+              You've already bet on this prompt.
+            </Typography>
       }
       <Divider />
       <Typography variant="body2">

@@ -14,30 +14,43 @@ import {
   Stack,
 } from "@mui/material";
 
-function Bet(prop) {
+function Bet(props) {
   return (
     <Box width="400px">
       <Card>
         <CardContent>
+          <Stack spacing={2} direction="row">
+            <Typography variant="h6" component="div">
+              Date Opened: {props.question.dateOpened}
+            </Typography>
+            <Typography variant="h6" component="div">
+              Date Closed: {props.question.dateClosed}
+            </Typography>
+          </Stack>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question.question}
+            {props.question.question}
           </Typography>
-        </CardContent>
-        <CardActions
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Box>
-            <FormControl>
-              <RadioGroup name="decision" aria-labelledby="decision-label">
-                <FormControlLabel control={<Radio />} label="Yes" value="Yes" />
-                <FormControlLabel control={<Radio />} label="No" value="No" />
-              </RadioGroup>
-            </FormControl>
-          </Box>
+          <Typography variant="h6" component="div">
+            Category: {props.question.category}
+          </Typography>
+          <Typography variant="h6" component="div">
+            Creator: {props.question.user.username}
+          </Typography>
+          <Typography variant="h6" component="div">
+            yes: {props.question.numYes}
+          </Typography>
+          <Typography variant="h6" component="div">
+            no: {props.question.numNo}
+          </Typography>
+          <Stack spacing={2} direction="row" padding={2}>
+            <Button variant="contained" style={{ textTransform: "none" }}>
+              Yes
+            </Button>
+            <Button variant="contained" style={{ textTransform: "none" }}>
+              No
+            </Button>
+
+          </Stack>
           <Stack>
             <TextField
               noWrap
@@ -50,7 +63,9 @@ function Bet(prop) {
             />
             <Button>Confirm</Button>
           </Stack>
-        </CardActions>
+
+        </CardContent>
+
       </Card>
     </Box>
   );
