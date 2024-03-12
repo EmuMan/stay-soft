@@ -2,14 +2,8 @@ import {
   Box,
   Card,
   CardContent,
-  Typography,
-  CardActions,
-  Button,
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
   Stack,
+  Typography
 } from "@mui/material";
 import { useState } from "react";
 
@@ -56,27 +50,22 @@ const CreatorPrompt = (prop) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          paddingRight: "20px",
+          paddingLeft: "10px"
         }}
       >
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {prop.question}
+            {prompt.question}
           </Typography>
-        </CardContent>
-        <CardActions>
-          <Box>
-            <FormControl>
-              <RadioGroup name="decision" aria-labelledby="decision-label">
-                <FormControlLabel control={<Radio />} label="Yes" value="Yes" />
-                <FormControlLabel control={<Radio />} label="No" value="No" />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Stack>
-            <Button>Confirm</Button>
+          <Typography gutterBottom variant="h6" component="div">
+            Responses
+          </Typography>
+          <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+            <Typography variant="h5" color={"primary"}>Yes: {prompt.numYes.toLocaleString()}</Typography>
+            <Typography variant="h5" color={"secondary"}>No: {prompt.numNo.toLocaleString()}</Typography>
           </Stack>
-        </CardActions>
+        </CardContent>
       </Card>
     </Box>
   );
