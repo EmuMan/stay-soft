@@ -52,8 +52,7 @@ const CreatorPrompt = (props) => {
         let points = {
           points:
             (winningBets[i].amount / correctPool) * wrongPool +
-            winningBets[i].amount +
-            winningBets[i].user.points,
+            winningBets[i].amount,
         };
         console.log(points);
         fetch(
