@@ -12,11 +12,7 @@ config();
 
 mongoose.set("debug", true);
 
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
-  )
-  .catch((error) => console.log(error));
+mongoose.connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`);
 
 // USERS
 
@@ -108,22 +104,17 @@ async function loginUser(email, password) {
 }
 
 async function updateUserById(id, amount) {
-  try {
-    const oldUser = await userModel.findById(id);
+  const oldUser = await userModel.findById(id);
 
-    if (!oldUser) {
-      console.error("User not found");
-      return null;
-    }
-
-    oldUser.points = oldUser.points - Number(amount);
-
-    const updatedUser = await oldUser.save();
-    return updatedUser;
-  } catch (error) {
-    console.error("Error in updateUserById:", error);
-    throw error;
+  if (!oldUser) {
+    console.error("User not found");
+    return null;
   }
+
+  oldUser.points = oldUser.points - Number(amount);
+
+  const updatedUser = await oldUser.save();
+  return updatedUser;
 }
 
 function authenticateUser(req, res, next) {
@@ -167,22 +158,21 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  if (prompt.closed) {
+  if (prompt.dateClosed != null) {
     throw new Error("Prompt already closed");
   }
 
-  if (prompt.user.id === reqUser.id) {
+  if (prompt.user.toString() === reqUser.id.toString()) {
     throw new Error("Cannot bet on own prompt");
   }
 
-  if (user.id !== reqUser.id) {
+  if (user.id.toString() !== reqUser.id.toString()) {
     throw new Error("User not authorized to place bet");
   }
 
   if (user.points < newBet.amount) {
     throw new Error("User does not have enough points to place bet");
   }
-
 
   if (newBet.decision) {
     prompt.numYes += 1;
@@ -239,32 +229,22 @@ function deletePromptById(id) {
 }
 
 async function updatePromptById(id, reqUser, closed) {
-  try {
-    const oldPrompt = await promptModel.findById(id);
+  const oldPrompt = await promptModel.findById(id);
 
-    if (!oldPrompt) {
-      console.error('Prompt not found');
-      return 404;
-    }
-
-    if (reqUser.id !== oldPrompt.user.id) {
-      console.error('User not authorized to update prompt');
-      return 403;
-    }
-
-    if (oldPrompt.closed) {
-      console.error('Prompt already closed');
-      return 403;
-    }
-
-    oldPrompt.closed = closed;
-
-    await oldPrompt.save();
-    return 204;
-  } catch (error) {
-    console.error("Error in updatePromptById:", error);
-    throw error;
+  if (!oldPrompt) {
+    throw new Error('Prompt not found');
   }
+
+  if (reqUser.id.toString() !== oldPrompt.user.toString()) {
+    throw new Error('User not authorized to update prompt');
+  }
+
+  if (oldPrompt.dateClosed !== null) {
+    throw new Error('Prompt already closed');
+  }
+
+  oldPrompt.dateClosed = new Date();
+  return oldPrompt.save();
 }
 
 // EXPORT
