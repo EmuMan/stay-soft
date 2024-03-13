@@ -80,7 +80,7 @@ const ProfilePage = (props) => {
           </div>
         </CardContent>
       </Card>
-      <MyBetsAndPrompts bets={bets} prompts={prompts} />
+      <MyBetsAndPrompts bets={bets} prompts={prompts} profile={props.profile} />
     </Stack>
   );
 };

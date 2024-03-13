@@ -223,6 +223,12 @@ app.patch("/users/:id", authenticateUser, (req, res) => {
   services.updateUserPointsById(req.params.id, points);
 });
 
+// for closing a prompt
+app.patch("/prompts/:id", authenticateUser, (req, res) => {
+  const { closed, user, result } = req.body;
+  services.updatePromptById(req.params.id, closed, user, result);
+});
+
 app.listen(process.env.PORT || port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

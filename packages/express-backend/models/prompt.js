@@ -7,10 +7,10 @@ const PromptSchema = new mongoose.Schema({
   numYes: { type: Number, default: 0 },
   numNo: { type: Number, default: 0 },
   dateOpened: { type: Date, required: true },
-  dateClosed: { type: Date, default: null},
+  dateClosed: { type: Date, default: null },
   yesPool: { type: Number, default: 0 },
   noPool: { type: Number, default: 0 },
-  resolution: { type: Boolean },
+  result: { type: Boolean },
   comments: [{ type: String }],
 });
 

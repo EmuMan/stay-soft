@@ -167,7 +167,7 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  if (prompt.dateClosed <= new Date()) {
+  if (prompt.dateClosed) {
     throw new Error("Prompt already closed");
   }
 
@@ -240,7 +240,7 @@ function deletePromptById(id) {
   return promptModel.findByIdAndDelete(id);
 }
 
-async function updatePromptById(id, reqUser, closed) {
+async function updatePromptById(id, reqUser, closed, result) {
   const oldPrompt = await promptModel.findById(id);
 
   if (!oldPrompt) {
@@ -251,11 +251,12 @@ async function updatePromptById(id, reqUser, closed) {
     throw new Error("User not authorized to update prompt");
   }
 
-  if (oldPrompt.dateClosed <= new Date()) {
+  if (oldPrompt.dateClosed) {
     throw new Error("Prompt already closed");
   }
 
   oldPrompt.dateClosed = new Date();
+  oldPrompt.result = result;
   return oldPrompt.save();
 }
 

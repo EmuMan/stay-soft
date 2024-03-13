@@ -8,22 +8,19 @@ import { useState } from "react";
 const CreatePage = (props) => {
   const [question, setQuestion] = useState("");
   const [category, setCategory] = useState("");
-  const [dateClosed, setDateClosed] = useState("");
-  const [prompt, setPrompt] = useState({ // eslint-disable-line no-unused-vars
+  const [prompt, setPrompt] = useState({
+    // eslint-disable-line no-unused-vars
     question: question,
     user: props.profile._id,
     category: category,
     dateOpened: new Date(),
-    dateClosed: new Date(),
   });
 
   function postPrompt() {
     prompt.question = question;
     prompt.category = category;
-    prompt.dateClosed = dateClosed;
     setQuestion("");
     setCategory("");
-    setDateClosed("");
     if (prompt.question !== "") {
       const promise = fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts`, {
         method: "POST",
@@ -65,19 +62,6 @@ const CreatePage = (props) => {
           setCategory(newValue);
         }}
       ></TextField>
-
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DatePicker']}>
-          <DatePicker
-            label="Date of Event"
-            name="dateCalendar"
-            style={{ width: "75%" }}
-            value={dateClosed}
-            onChange={(newValue) => setDateClosed(newValue)}
-          />
-        </DemoContainer>
-      </LocalizationProvider>
-
 
       <Button
         variant="contained"

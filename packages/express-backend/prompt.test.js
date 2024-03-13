@@ -55,7 +55,7 @@ describe('Prompt Service Tests', () => {
         dateClosed: null,
         yesPool: 100,
         noPool: 50,
-        resolution: null,
+        result: null,
         comments: ["Great question!", "Very thought-provoking!"],
       },
       {
@@ -68,7 +68,7 @@ describe('Prompt Service Tests', () => {
         dateClosed: null,
         yesPool: 150,
         noPool: 100,
-        resolution: null,
+        result: null,
         comments: ["Interesting perspective.", "I prefer real travel."],
       },
     ];

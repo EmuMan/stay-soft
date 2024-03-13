@@ -27,7 +27,10 @@ const MyBetsAndPrompts = (props) => {
           <MyBetsFeed bets={props.bets} />
         </TabPanel>
         <TabPanel value="2">
-          <CreatorPromptsFeed prompts={props.prompts} />
+          <CreatorPromptsFeed
+            prompts={props.prompts.filter((prompt) => !prompt.dateClosed)}
+            profile={props.profile}
+          />
         </TabPanel>
       </TabContext>
     </Box>

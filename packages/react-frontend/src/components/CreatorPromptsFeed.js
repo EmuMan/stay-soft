@@ -1,9 +1,11 @@
 import React from "react";
-import CreatorPrompt from "./CreatorPrompt.js"
+import CreatorPrompt from "./CreatorPrompt.js";
 
 function CreatorPromptsFeed(props) {
   const questions = props.prompts.map((prompt, index) => {
-    return <CreatorPrompt key={index} prompt={prompt} />;
+    return (
+      <CreatorPrompt key={index} prompt={prompt} profile={props.profile} />
+    );
   });
   return (
     <div
@@ -12,7 +14,7 @@ function CreatorPromptsFeed(props) {
         gap: "20px",
         flexDirection: "column",
         alignItems: "center",
-        minWidth: "400px"
+        minWidth: "400px",
       }}
     >
       {questions}

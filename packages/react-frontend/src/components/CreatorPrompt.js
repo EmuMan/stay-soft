@@ -21,7 +21,7 @@ const CreatorPrompt = (props) => {
   let { prompt } = props;
 
   let handleResolution = () => {
-    if (result !== "" && closed < 2) {
+    if (result !== "" && closed < 2 && !prompt.dateClosed) {
       let correctPool = prompt.yesPool;
       let wrongPool = prompt.noPool;
       if (result === "Yes") {
@@ -70,6 +70,19 @@ const CreatorPrompt = (props) => {
           }
         );
       }
+      setClosed(closed + 1);
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts/:id${prompt._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          closed: true,
+          user: props.profile._id,
+          result: result,
+        }),
+      });
     }
   };
   let handleChange = (event) => {
