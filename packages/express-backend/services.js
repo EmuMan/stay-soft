@@ -107,7 +107,7 @@ async function loginUser(email, password) {
   };
 }
 
-async function updateUserById(id, amount) {
+async function updateUserPointsById(id, amount) {
   try {
     const oldUser = await userModel.findById(id);
 
@@ -116,12 +116,12 @@ async function updateUserById(id, amount) {
       return null;
     }
 
-    oldUser.points = oldUser.points - Number(amount);
+    oldUser.points = oldUser.points + Number(amount);
 
     const updatedUser = await oldUser.save();
     return updatedUser;
   } catch (error) {
-    console.error("Error in updateUserById:", error);
+    console.error("Error in updateUserPointsById:", error);
     throw error;
   }
 }
@@ -149,7 +149,7 @@ async function addBet(reqUser, bet) {
     user: bet.user,
     promptId: bet.promptId,
   });
-  
+
   if (existingBet) {
     throw new Error("User already placed a bet on this prompt");
   }
@@ -182,7 +182,6 @@ async function addBet(reqUser, bet) {
   if (user.points < newBet.amount) {
     throw new Error("User does not have enough points to place bet");
   }
-
 
   if (newBet.decision) {
     prompt.numYes += 1;
@@ -243,17 +242,17 @@ async function updatePromptById(id, reqUser, closed) {
     const oldPrompt = await promptModel.findById(id);
 
     if (!oldPrompt) {
-      console.error('Prompt not found');
+      console.error("Prompt not found");
       return 404;
     }
 
     if (reqUser.id !== oldPrompt.user.id) {
-      console.error('User not authorized to update prompt');
+      console.error("User not authorized to update prompt");
       return 403;
     }
 
     if (oldPrompt.closed) {
-      console.error('Prompt already closed');
+      console.error("Prompt already closed");
       return 403;
     }
 
@@ -274,7 +273,7 @@ export default {
   getUsers,
   findUserById,
   deleteUserById,
-  updateUserById,
+  updateUserPointsById,
   addBet,
   getBets,
   findBetById,

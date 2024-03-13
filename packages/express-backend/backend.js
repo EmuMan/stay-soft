@@ -158,8 +158,8 @@ app.put("/prompts/:id", authenticateUser, (req, res) => {
   const { closed } = req.body;
 
   services
-  .updatePromptById(id, req.user, closed)
-  .then((result) => {
+    .updatePromptById(id, req.user, closed)
+    .then((result) => {
       if (result === 204) {
         res.status(204).send();
       } else if (result === 403) {
@@ -167,8 +167,8 @@ app.put("/prompts/:id", authenticateUser, (req, res) => {
       } else if (result === 404) {
         res.status(404).send("Resource not found.");
       }
-  })
-  .catch((error) => res.status(500).send(error.message));
+    })
+    .catch((error) => res.status(500).send(error.message));
 });
 
 // DELETES
@@ -202,21 +202,25 @@ app.delete("/bets/:id", authenticateUser, (req, res) => {
 });
 
 app.delete("/prompts/:id", authenticateUser, (req, res) => {
-    const id = req.params["id"];
-        services.deletePromptById(id)
-            .then(result => {
-                if (result) {
-                    res.status(204).send();
-                } else {
-                    res.status(404).send("Resource not found.");
-                }
-            })
-            .catch(error => res.status(500).send(error.message));
+  const id = req.params["id"];
+  services
+    .deletePromptById(id)
+    .then((result) => {
+      if (result) {
+        res.status(204).send();
+      } else {
+        res.status(404).send("Resource not found.");
+      }
+    })
+    .catch((error) => res.status(500).send(error.message));
 });
 
 app.listen(process.env.PORT || port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
 
-// PATCHES
-app.patch("/users/:id")
+// // PATCHES
+// app.patch("/users/:id", authenticateUser, (req, res) => {
+//   const id = req.params["id"];
+//   services.
+// })
