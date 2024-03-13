@@ -15,6 +15,9 @@ mongoose.set("debug", true);
 mongoose.connect(
   `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
 );
+mongoose.connect(
+  `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
+);
 
 // USERS
 
@@ -164,7 +167,7 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  if (prompt.dateClosed != null) {
+  if (prompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
@@ -245,7 +248,7 @@ async function updatePromptById(id, reqUser, closed) {
     throw new Error("User not authorized to update prompt");
   }
 
-  if (oldPrompt.dateClosed !== null) {
+  if (oldPrompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
