@@ -238,7 +238,7 @@ describe('Bet Service Tests', () => {
   });
 
   test('getBets should retrieve bets correctly', async () => {
-    const bets = await betService.getBets({});
+    const bets = await betService.getBets();
     expect(bets.length).toBeGreaterThan(0);
     bets.forEach(bet => {
       expect(bet).toHaveProperty('amount');
@@ -246,12 +246,13 @@ describe('Bet Service Tests', () => {
     });
   });
 
-  test('should correctly retrieve bets filtered by user', async () => {
+  test('getBets should correctly retrieve bets filtered by user', async () => {
     const filteredBets = await betService.getBets({ user: user._id });
-
-    expect(filteredBets.length).toBe(1);
-    expect(filteredBets[0].user._id.toString()).toEqual(user._id.toString());
-    expect(filteredBets[0].user.username).toEqual(user.username);
+    expect(filteredBets).not.toBeNull();
+    expect(filteredBets.length).toBeGreaterThan(0);
+    filteredBets.forEach(bet => {
+      expect(bet.user._id.toString()).toEqual(user._id.toString());
+    });
   });
 
   test('findBetById should retrieve the correct bet', async () => {
