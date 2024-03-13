@@ -14,19 +14,23 @@ import {
 import { useState } from "react";
 
 const CreatorPrompt = (props) => {
-  const [result, setResult] = useState("");
-  const [bets, setBets] = useState([]);
-  const [betters, setBetters] = useState([]);
-  const { prompt } = props;
+  let [result, setResult] = useState("");
+  let [bets, setBets] = useState([]);
+  let [betters, setBetters] = useState([]);
+  let { prompt } = props;
 
-  const handleResolution = () => {
+  let handleResolution = () => {
     if (result !== "") {
+      let correctPool = prompt.yesPool;
+      let wrongPool = prompt.noPool;
       if (result === "Yes") {
-        result = true;
+        setResult(true);
       } else if (result === "No") {
-        result = false;
+        setResult(false);
+        let correctPool = prompt.noPool;
+        let wrongPool = prompt.yesPool;
       }
-      const fetchBets = () => {
+      let fetchBets = () => {
         return fetch(
           `${process.env.REACT_APP_API_ENDPOINT}/bets?promptId=${prompt._id}`,
           {
@@ -42,11 +46,31 @@ const CreatorPrompt = (props) => {
         .catch((error) => {
           console.log(error);
         });
-      const winningBets = bets.filter((bet) => bet.decision === result);
-      // use patch to update each user's points
+      let winningBets = bets.filter((bet) => bet.decision === result);
+      console.log(winningBets);
+      for (let i = 0; i < winningBets.length; i++) {
+        let points = {
+          points:
+            (winningBets[i].amount / correctPool) * wrongPool +
+            winningBets[i].amount +
+            winningBets[i].user.points,
+        };
+        console.log(points);
+        fetch(
+          `${process.env.REACT_APP_API_ENDPOINT}/users/${winningBets[i].user._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(points),
+          }
+        );
+      }
     }
   };
-  const handleChange = (event) => {
+  let handleChange = (event) => {
     setResult(event.target.value);
   };
 
@@ -84,14 +108,18 @@ const CreatorPrompt = (props) => {
         <CardActions>
           <Box>
             <FormControl>
-              <RadioGroup name="decision" aria-labelledby="decision-label">
+              <RadioGroup
+                name="decision"
+                aria-labelledby="decision-label"
+                onChange={handleChange}
+              >
                 <FormControlLabel control={<Radio />} label="Yes" value="Yes" />
                 <FormControlLabel control={<Radio />} label="No" value="No" />
               </RadioGroup>
             </FormControl>
           </Box>
           <Stack>
-            <Button>Confirm</Button>
+            <Button onClick={handleResolution}>Confirm</Button>
           </Stack>
         </CardActions>
       </Card>

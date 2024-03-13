@@ -46,9 +46,9 @@ app.get("/users/:id", authenticateUser, async (req, res) => {
 });
 
 app.get("/bets", authenticateUser, async (req, res) => {
-  const { user } = req.query;
+  const { user, prompt } = req.query;
   try {
-    const bets = await services.getBets({ user });
+    const bets = await services.getBets({ user, prompt });
     res.status(200).json(bets);
   } catch (err) {
     res.status(500).send(err.message);
@@ -213,6 +213,14 @@ app.delete("/prompts/:id", authenticateUser, (req, res) => {
       }
     })
     .catch((error) => res.status(500).send(error.message));
+});
+
+// PATCHES
+
+// for updating user points
+app.patch("/users/:id", authenticateUser, (req, res) => {
+  const { points } = req.body;
+  services.updateUserPointsById(req.params.id, points);
 });
 
 app.listen(process.env.PORT || port, () => {
