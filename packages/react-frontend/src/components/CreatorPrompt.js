@@ -17,10 +17,11 @@ const CreatorPrompt = (props) => {
   let [result, setResult] = useState("");
   let [bets, setBets] = useState([]);
   let [betters, setBetters] = useState([]);
+  const [closed, setClosed] = useState(0);
   let { prompt } = props;
 
   let handleResolution = () => {
-    if (result !== "") {
+    if (result !== "" && closed < 2) {
       let correctPool = prompt.yesPool;
       let wrongPool = prompt.noPool;
       if (result === "Yes") {
