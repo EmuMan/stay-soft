@@ -68,8 +68,10 @@ const Prompt = ({
       
           handleBetUpdate(_id);
           onBetPlacement(Number(betAmount));
+        } else {
+          response.text().then((error) => alert(error));
         }
-      });
+      }).catch((error) => alert(error));
     } catch (error) {
       console.error("Error adding bet:", error);
     }
@@ -120,9 +122,10 @@ const Prompt = ({
         Category: {category} by user
       </Typography>
       <Divider />
+      
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-        <Typography variant="body2">Yes! {numYes.toLocaleString()}</Typography>
-        <Typography variant="body2">No! {numNo.toLocaleString()}</Typography>
+        <Typography variant="body2">YES! {numYes.toLocaleString()}</Typography>
+        <Typography variant="body2">NO! {numNo.toLocaleString()}</Typography>
       </Stack>
       {(numYes > 0 || numNo > 0) ? (
         <Box position="relative" display="flex" alignItems="center">
@@ -141,6 +144,11 @@ const Prompt = ({
           No votes yet
         </Typography>
       )}
+      <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+        <Typography variant="body2">Points bet: {yesPool}</Typography>
+        <Typography variant="body2">Points bet: {noPool}</Typography>
+      </Stack>
+      <Typography variant="heading2">Current Odds: 1 /  {noPool/yesPool}</Typography>
       {
         loggedInUser && user && loggedInUser === user ?
           <Typography variant="body1" style={{ textAlign: 'center', marginTop: '10px' }}>
