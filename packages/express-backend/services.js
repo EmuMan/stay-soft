@@ -12,7 +12,9 @@ config();
 
 mongoose.set("debug", true);
 
-mongoose.connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`);
+mongoose.connect(
+  `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
+);
 
 // USERS
 
@@ -112,7 +114,7 @@ async function updateUserPointsById(id, amount) {
   }
 
   oldUser.points = oldUser.points + Number(amount);
-
+  try {
     const updatedUser = await oldUser.save();
     return updatedUser;
   } catch (error) {
