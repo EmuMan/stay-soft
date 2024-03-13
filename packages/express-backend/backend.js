@@ -46,9 +46,9 @@ app.get("/users/:id", authenticateUser, async (req, res) => {
 });
 
 app.get("/bets", authenticateUser, async (req, res) => {
-  const { user, prompt } = req.query;
+  const { user, promptId } = req.query;
   try {
-    const bets = await services.getBets({ user, prompt });
+    const bets = await services.getBets({ user, promptId });
     res.status(200).json(bets);
   } catch (err) {
     res.status(500).send(err.message);

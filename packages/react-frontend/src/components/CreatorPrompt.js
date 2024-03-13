@@ -47,14 +47,16 @@ const CreatorPrompt = (props) => {
           console.log(error);
         });
       let winningBets = bets.filter((bet) => bet.decision === result);
-      console.log(winningBets);
+      console.log("The actual prompt: ");
+      console.log(prompt._id);
       for (let i = 0; i < winningBets.length; i++) {
         let points = {
           points:
             (winningBets[i].amount / correctPool) * wrongPool +
             winningBets[i].amount,
         };
-        console.log(points);
+        console.log(winningBets[i].promptId);
+        console.log(winningBets[i].decision);
         fetch(
           `${process.env.REACT_APP_API_ENDPOINT}/users/${winningBets[i].user._id}`,
           {

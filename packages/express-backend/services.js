@@ -203,6 +203,9 @@ function getBets(filter = {}) {
   if (filter.user) {
     queryFilter.user = filter.user;
   }
+  if (filter.promptId) {
+    queryFilter.promptId = filter.promptId;
+  }
   return betModel.find(queryFilter).populate("user").populate("promptId");
 }
 
