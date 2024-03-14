@@ -16,7 +16,6 @@ import { useState } from "react";
 const CreatorPrompt = (props) => {
   let [result, setResult] = useState("");
   let [bets, setBets] = useState([]);
-  let [betters, setBetters] = useState([]);
   const [closed, setClosed] = useState(0);
   let { prompt } = props;
 
@@ -28,8 +27,8 @@ const CreatorPrompt = (props) => {
         setResult(true);
       } else if (result === "No") {
         setResult(false);
-        let correctPool = prompt.noPool;
-        let wrongPool = prompt.yesPool;
+        correctPool = prompt.noPool;
+        wrongPool = prompt.yesPool;
       }
 
       let fetchBets = () => {

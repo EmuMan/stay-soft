@@ -1,20 +1,16 @@
 import { Stack, TextField, Button } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState } from "react";
 
 const CreatePage = (props) => {
   const [question, setQuestion] = useState("");
   const [category, setCategory] = useState("");
-  const [prompt, setPrompt] = useState({
+  const prompt = {
     // eslint-disable-line no-unused-vars
     question: question,
     user: props.profile._id,
     category: category,
     dateOpened: new Date(),
-  });
+  };
 
   function postPrompt() {
     prompt.question = question;
