@@ -100,9 +100,9 @@ describe('User Service Tests', () => {
 
   test('updateUserById should handle non-existing user', async () => {
     const nonExistingId = new mongoose.Types.ObjectId();
-    const result = await userService.updateUserById(nonExistingId, 50);
-    expect(result).toBeNull();
+    await expect(userService.updateUserById(nonExistingId, 50)).rejects.toThrow("User not found");
   });
+  
 
   test('signupUser should create a new user', async () => {
     const newUser = {

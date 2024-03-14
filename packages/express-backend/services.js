@@ -10,7 +10,11 @@ import { config } from "dotenv";
 
 config();
 
-mongoose.connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`);
+mongoose.set("debug", false);
+
+mongoose.connect(
+  `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
+);
 
 // USERS
 
@@ -105,8 +109,7 @@ async function updateUserPointsById(id, amount) {
   const oldUser = await userModel.findById(id);
 
   if (!oldUser) {
-    console.error("User not found");
-    return null;
+    throw new Error("User not found");
   }
 
   oldUser.points = oldUser.points + Number(amount);
@@ -243,6 +246,7 @@ async function updatePromptById(id, reqUser, closed, result) {
   if (reqUser.id.toString() !== oldPrompt.user.toString()) {
     throw new Error("User not authorized to update prompt");
   }
+
 
   if (oldPrompt.dateClosed) {
     throw new Error("Prompt already closed");
