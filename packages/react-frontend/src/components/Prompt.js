@@ -113,6 +113,9 @@ const Prompt = ({
   const formattedOpen = new Date(dateOpened).toLocaleDateString();
   const formattedClosed = new Date(dateClosed).toLocaleDateString();
 
+  const totalVotes = yesPool + noPool;
+  const oddsString = totalVotes > 0 ? `1 / ${(totalVotes / yesPool).toFixed(2)}` : "N/A";
+
   return (
     <Box style={containerStyle}>
       <Stack spacing={2} direction="row">
@@ -179,7 +182,7 @@ const Prompt = ({
         <Typography variant="body2">Points bet: {noPool}</Typography>
       </Stack>
       <Typography variant="heading2">
-        Current Odds: 1 / {noPool / yesPool}
+        Current Odds: {oddsString}
       </Typography>
       {loggedInUser && user && loggedInUser === user ? (
         <Typography
