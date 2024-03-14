@@ -243,14 +243,39 @@ async function updatePromptById(id, reqUser, closed, result) {
     throw new Error("User not authorized to update prompt");
   }
 
+  if (!closed) {
+    return;
+  }
 
   if (oldPrompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
+  await resolveBets(oldPrompt);
+
   oldPrompt.dateClosed = new Date();
   oldPrompt.result = result;
   return oldPrompt.save();
+}
+
+async function resolveBets(promptId) {
+  const bets = await betModel.find({ promptId });
+
+  const correctPool = result ? oldPrompt.yesPool : oldPrompt.noPool;
+  const wrongPool = result ? oldPrompt.noPool : oldPrompt.yesPool;
+
+  for (let j = 0; j < bets.length; j++) {
+    if (bets[j].decision === result) {
+      const user = await userModel.findById(bets[j].user);
+      const points = {
+        points:
+          (bets[j].amount / correctPool) * wrongPool + bets[j].amount,
+      };
+      await user.updateOne(points);
+    }
+
+    await betModel.findByIdAndDelete(bets[j]._id);
+  }
 }
 
 // EXPORT
