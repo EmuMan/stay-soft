@@ -113,13 +113,9 @@ async function updateUserPointsById(id, amount) {
   }
 
   oldUser.points = oldUser.points + Number(amount);
-  try {
-    const updatedUser = await oldUser.save();
-    return updatedUser;
-  } catch (error) {
-    console.error("Error in updateUserPointsById:", error);
-    throw error;
-  }
+
+  const updatedUser = await oldUser.save();
+  return updatedUser;
 }
 
 function authenticateUser(req, res, next) {
