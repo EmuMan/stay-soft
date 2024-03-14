@@ -89,7 +89,7 @@ const CreatorPrompt = (props) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      });
+      }).then((response) => {props.onPromptClose(prompt._id)});
     }
   };
   let handleChange = (event) => {

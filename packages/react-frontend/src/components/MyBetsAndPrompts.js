@@ -27,7 +27,7 @@ const MyBetsAndPrompts = (props) => {
           <MyBetsFeed bets={props.bets} />
         </TabPanel>
         <TabPanel value="2">
-          <CreatorPromptsFeed prompts={props.prompts} profile={props.profile} />
+          <CreatorPromptsFeed prompts={props.prompts} onPromptClose={props.onPromptClose} profile={props.profile} />
         </TabPanel>
       </TabContext>
     </Box>

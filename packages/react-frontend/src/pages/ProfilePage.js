@@ -44,6 +44,10 @@ const ProfilePage = (props) => {
       });
   }, [profileId]);
 
+  const onPromptClose = (promptId) => {
+    setPrompts(prompts.filter((prompt) => prompt._id !== promptId));
+  };
+
   return (
     <Stack
       style={{
@@ -80,7 +84,7 @@ const ProfilePage = (props) => {
           </div>
         </CardContent>
       </Card>
-      <MyBetsAndPrompts bets={bets} prompts={prompts} profile={props.profile} />
+      <MyBetsAndPrompts bets={bets} onPromptClose={onPromptClose} prompts={prompts} profile={props.profile} />
     </Stack>
   );
 };
