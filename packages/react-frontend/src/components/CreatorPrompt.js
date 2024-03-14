@@ -31,6 +31,7 @@ const CreatorPrompt = (props) => {
         let correctPool = prompt.noPool;
         let wrongPool = prompt.yesPool;
       }
+
       let fetchBets = () => {
         return fetch(
           `${process.env.REACT_APP_API_ENDPOINT}/bets?promptId=${prompt._id}`,
@@ -41,12 +42,14 @@ const CreatorPrompt = (props) => {
           }
         );
       };
+
       fetchBets()
         .then((res) => res.json())
         .then((json) => setBets(json))
         .catch((error) => {
           console.log(error);
         });
+
       let winningBets = bets.filter((bet) => bet.decision === result);
       console.log("The actual prompt: ");
       console.log(prompt._id);
@@ -71,17 +74,13 @@ const CreatorPrompt = (props) => {
         );
       }
       setClosed(closed + 1);
-      fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts/:id${prompt._id}`, {
-        method: "PATCH",
+
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/prompts/${prompt._id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          closed: true,
-          user: props.profile._id,
-          result: result,
-        }),
       });
     }
   };
