@@ -50,6 +50,15 @@ const CreatorPrompt = (props) => {
         });
 
       let winningBets = bets.filter((bet) => bet.decision === result);
+      for (let j = 0; j < bets.length; j++) {
+        fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets/${bets[j]._id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+      }
       console.log("The actual prompt: ");
       console.log(prompt._id);
       for (let i = 0; i < winningBets.length; i++) {
@@ -69,16 +78,6 @@ const CreatorPrompt = (props) => {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify(points),
-          }
-        );
-        fetch(
-          `${process.env.REACT_APP_API_ENDPOINT}/bets/${winningBets[i]._id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
           }
         );
       }
