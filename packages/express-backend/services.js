@@ -105,17 +105,21 @@ async function loginUser(email, password) {
   };
 }
 
-async function updateUserById(id, amount) {
+async function updateUserPointsById(id, amount) {
   const oldUser = await userModel.findById(id);
 
   if (!oldUser) {
     throw new Error("User not found");
   }
 
-  oldUser.points = oldUser.points - Number(amount);
-
-  const updatedUser = await oldUser.save();
-  return updatedUser;
+  oldUser.points = oldUser.points + Number(amount);
+  try {
+    const updatedUser = await oldUser.save();
+    return updatedUser;
+  } catch (error) {
+    console.error("Error in updateUserPointsById:", error);
+    throw error;
+  }
 }
 
 function authenticateUser(req, res, next) {
@@ -195,6 +199,9 @@ function getBets(filter = {}) {
   if (filter.user) {
     queryFilter.user = filter.user;
   }
+  if (filter.promptId) {
+    queryFilter.promptId = filter.promptId;
+  }
   return betModel.find(queryFilter).populate("user").populate("promptId");
 }
 
@@ -229,7 +236,7 @@ function deletePromptById(id) {
   return promptModel.findByIdAndDelete(id);
 }
 
-async function updatePromptById(id, reqUser, closed) {
+async function updatePromptById(id, reqUser, closed, result) {
   const oldPrompt = await promptModel.findById(id);
 
   if (!oldPrompt) {
@@ -240,11 +247,13 @@ async function updatePromptById(id, reqUser, closed) {
     throw new Error("User not authorized to update prompt");
   }
 
+
   if (oldPrompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
   oldPrompt.dateClosed = new Date();
+  oldPrompt.result = result;
   return oldPrompt.save();
 }
 
@@ -255,7 +264,7 @@ export default {
   getUsers,
   findUserById,
   deleteUserById,
-  updateUserById,
+  updateUserPointsById,
   addBet,
   getBets,
   findBetById,
