@@ -71,6 +71,16 @@ const CreatorPrompt = (props) => {
             body: JSON.stringify(points),
           }
         );
+        fetch(
+          `${process.env.REACT_APP_API_ENDPOINT}/bets/${winningBets[i]._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
       }
       setClosed(closed + 1);
 
