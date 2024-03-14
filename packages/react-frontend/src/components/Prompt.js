@@ -111,12 +111,16 @@ const Prompt = ({
   });
 
   const formattedOpen = new Date(dateOpened).toLocaleDateString();
+  const formattedClosed = new Date(dateClosed).toLocaleDateString();
 
   return (
     <Box style={containerStyle}>
       <Stack spacing={2} direction="row">
         <Typography variant="h6" component="div">
           Date Opened: {formattedOpen}
+        </Typography>
+        <Typography variant="h6" component="div">
+          Date Closed: {formattedClosed}
         </Typography>
       </Stack>
       <Typography variant="h5" gutterBottom>

@@ -1,9 +1,14 @@
 import { Stack, TextField, Button } from "@mui/material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState } from "react";
 
 const CreatePage = (props) => {
   const [question, setQuestion] = useState("");
   const [category, setCategory] = useState("");
+  const [dateClosed, setDateClosed] = useState("");
   const prompt = {
     // eslint-disable-line no-unused-vars
     question: question,
@@ -15,6 +20,8 @@ const CreatePage = (props) => {
   function postPrompt() {
     prompt.question = question;
     prompt.category = category;
+    prompt.dateClosed = dateClosed;
+    console.log(dateClosed);
     setQuestion("");
     setCategory("");
     if (prompt.question !== "") {
@@ -58,6 +65,18 @@ const CreatePage = (props) => {
           setCategory(newValue);
         }}
       ></TextField>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={["DatePicker"]}>
+          <DatePicker
+            label="Date of Event"
+            name="dateCalendar"
+            style={{ width: "75%" }}
+            value={dateClosed}
+            onChange={(newValue) => setDateClosed(newValue)}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
 
       <Button
         variant="contained"

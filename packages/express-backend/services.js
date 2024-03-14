@@ -163,7 +163,7 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  if (prompt.dateClosed) {
+  if (prompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
@@ -248,7 +248,7 @@ async function updatePromptById(id, reqUser, closed, result) {
   }
 
 
-  if (oldPrompt.dateClosed) {
+  if (oldPrompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 

@@ -20,7 +20,7 @@ const CreatorPrompt = (props) => {
   let { prompt } = props;
 
   let handleResolution = () => {
-    if (result !== "" && closed < 2 && !prompt.dateClosed) {
+    if (result !== "" && closed < 2) {
       let correctPool = prompt.yesPool;
       let wrongPool = prompt.noPool;
       if (result === "Yes") {

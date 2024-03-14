@@ -10,28 +10,37 @@ function Feed({ prompts, onBetPlacement }) {
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = jwtDecode(token);
-      setLoggedInUser(decoded.id); 
+      setLoggedInUser(decoded.id);
       fetchBets(decoded.id, token);
     }
   }, []);
 
   const handleBetUpdate = (promptId) => {
-    setUserBets(prevBets => [...prevBets, { promptId, userId: loggedInUser }]);
+    setUserBets((prevBets) => [
+      ...prevBets,
+      { promptId, userId: loggedInUser },
+    ]);
   };
 
   const fetchBets = async (userId, token) => {
-    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/bets?user=${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}/bets?user=${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await response.json();
     setUserBets(data || []);
   };
 
-  const filteredPrompts = prompts.filter(prompt => prompt.user._id !== loggedInUser);
+  const filteredPrompts = prompts.filter(
+    (prompt) => prompt.user._id !== loggedInUser
+  );
   const promptComponents = filteredPrompts.map((prompt) => {
-    const hasBet = userBets.some(bet => bet.promptId === prompt._id);
+    const hasBet = userBets.some((bet) => bet.promptId === prompt._id);
+    console.log(prompt.dateClosed);
     return (
       <Prompt
         key={prompt._id}
@@ -40,6 +49,7 @@ function Feed({ prompts, onBetPlacement }) {
         hasBet={hasBet}
         handleBetUpdate={handleBetUpdate}
         loggedInUser={loggedInUser}
+        dateClosed={prompt.dateClosed}
       />
     );
   });
