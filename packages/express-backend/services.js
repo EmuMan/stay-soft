@@ -10,7 +10,11 @@ import { config } from "dotenv";
 
 config();
 
-mongoose.connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`);
+mongoose.set("debug", false);
+
+mongoose.connect(
+  `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
+);
 
 // USERS
 
@@ -105,8 +109,7 @@ async function updateUserById(id, amount) {
   const oldUser = await userModel.findById(id);
 
   if (!oldUser) {
-    console.error("User not found");
-    return null;
+    throw new Error("User not found");
   }
 
   oldUser.points = oldUser.points - Number(amount);
@@ -138,7 +141,7 @@ async function addBet(reqUser, bet) {
     user: bet.user,
     promptId: bet.promptId,
   });
-  
+
   if (existingBet) {
     throw new Error("User already placed a bet on this prompt");
   }
@@ -156,7 +159,7 @@ async function addBet(reqUser, bet) {
     throw new Error("User not found");
   }
 
-  if (prompt.dateClosed != null) {
+  if (prompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
@@ -230,15 +233,15 @@ async function updatePromptById(id, reqUser, closed) {
   const oldPrompt = await promptModel.findById(id);
 
   if (!oldPrompt) {
-    throw new Error('Prompt not found');
+    throw new Error("Prompt not found");
   }
 
   if (reqUser.id.toString() !== oldPrompt.user.toString()) {
-    throw new Error('User not authorized to update prompt');
+    throw new Error("User not authorized to update prompt");
   }
 
-  if (oldPrompt.dateClosed !== null) {
-    throw new Error('Prompt already closed');
+  if (oldPrompt.dateClosed <= new Date()) {
+    throw new Error("Prompt already closed");
   }
 
   oldPrompt.dateClosed = new Date();

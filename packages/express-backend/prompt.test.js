@@ -52,7 +52,7 @@ describe('Prompt Service Tests', () => {
         numYes: 10,
         numNo: 5,
         dateOpened: new Date(),
-        dateClosed: null,
+        dateClosed: new Date('01-01-2070'),
         yesPool: 100,
         noPool: 50,
         resolution: null,
@@ -65,7 +65,7 @@ describe('Prompt Service Tests', () => {
         numYes: 15,
         numNo: 20,
         dateOpened: new Date(),
-        dateClosed: null,
+        dateClosed: new Date('01-01-2070'),
         yesPool: 150,
         noPool: 100,
         resolution: null,
@@ -155,8 +155,6 @@ describe('Prompt Service Tests', () => {
       .toThrow('User not authorized to update prompt');
   });
   
-  
-  
   test('updatePromptById should throw an error if the prompt is already closed', async () => {
     const user = await new userModel({
       username: 'testuser',
@@ -194,7 +192,8 @@ describe('Prompt Service Tests', () => {
       question: "Another sample question?",
       user: user._id,
       category: "Another Category",
-      dateOpened: new Date(),
+      dateOpened: new Date('01-01-1970'),
+      dateClosed: new Date('01-02-2070'),
     }).save();
   
     await promptService.updatePromptById(prompt._id, { id: user._id }, true);
