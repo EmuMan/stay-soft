@@ -205,8 +205,18 @@ function findBetById(id) {
   return betModel.findById(id).populate("user");
 }
 
-function deleteBetById(id) {
-  return betModel.findByIdAndDelete(id);
+async function deleteBetById(id) {
+  const bet = betModel.findById(id);
+  const prompt = promptModel.findById(bet.promptId);
+  const user = userModel.findById(bet.user);
+  
+  if (prompt.result === bet.decision) {
+    user.betsWon += 1;
+  } else {
+    user.betsLost += 1;
+  }
+
+  return await betModel.findByIdAndDelete(id);
 }
 
 // PROMPTS
