@@ -10,8 +10,6 @@ import { config } from "dotenv";
 
 config();
 
-mongoose.set("debug", true);
-
 mongoose.connect(`mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`);
 
 // USERS
