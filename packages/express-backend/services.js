@@ -10,7 +10,7 @@ import { config } from "dotenv";
 
 config();
 
-mongoose.set("debug", true);
+mongoose.set("debug", false);
 
 mongoose.connect(
   `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CLUSTER}`
@@ -109,8 +109,7 @@ async function updateUserById(id, amount) {
   const oldUser = await userModel.findById(id);
 
   if (!oldUser) {
-    console.error("User not found");
-    return null;
+    throw new Error("User not found");
   }
 
   oldUser.points = oldUser.points - Number(amount);

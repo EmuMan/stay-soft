@@ -31,7 +31,7 @@ describe('Bet Service Tests', () => {
       hashedPassword: 'password',
       points: 500,
       firstName: 'John',
-      lastName: 'Doe'
+      lastName: 'Doe',
     });
     await user.save();
 
@@ -41,7 +41,7 @@ describe('Bet Service Tests', () => {
       hashedPassword: 'password',
       points: 500,
       firstName: 'Jane',
-      lastName: 'Doe'
+      lastName: 'Doe',
     })
     await user2.save();
 
@@ -51,7 +51,7 @@ describe('Bet Service Tests', () => {
         hashedPassword: 'password',
         points: 500,
         firstName: 'Jane',
-        lastName: 'Doe'
+        lastName: 'Doe',
     })
     await user3.save();
 
@@ -60,6 +60,7 @@ describe('Bet Service Tests', () => {
         user: user._id,
         category: "Weather",
         dateOpened: new Date(),
+        dateClosed: new Date('01-01-2070'),
     });
     await prompt.save();
 
@@ -68,6 +69,7 @@ describe('Bet Service Tests', () => {
         user: user2._id,
         category: "Finance",
         dateOpened: new Date(),
+        dateClosed: new Date('01-01-2070'),
     })
     await prompt2.save();
 
@@ -75,7 +77,7 @@ describe('Bet Service Tests', () => {
         promptId: prompt._id,
         user: user._id,
         decision: true,
-        amount: 50
+        amount: 50,
     });
     await bet1.save();
 
@@ -83,7 +85,7 @@ describe('Bet Service Tests', () => {
         promptId: prompt._id,
         user: user2._id,
         decision: true,
-        amount: 20
+        amount: 20,
     })
     await bet2.save();
 
@@ -102,7 +104,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt2._id,
       user: user._id,
       decision: true,
-      amount: 100
+      amount: 100,
     };
   
     const reqUser = { id: user._id.toString() };
@@ -121,7 +123,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt2._id,
       user: user._id,
       decision: false,
-      amount: 100
+      amount: 100,
     };
   
     const reqUser = { id: user._id.toString() };
@@ -182,7 +184,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt2._id,
       user: user._id,
       decision: false,
-      amount: 50
+      amount: 50,
     };
   
     const reqUser = { id: user._id };
@@ -201,7 +203,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt._id,
       user: user._id,
       decision: true,
-      amount: 50
+      amount: 50,
     };
   
     await expect(betService.addBet({ id: user._id }, betDetails))
@@ -227,7 +229,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt2._id,
       user: user3._id,
       decision: true,
-      amount: 50
+      amount: 50,
     };
 
     const reqUser = { id: user._id };
@@ -260,7 +262,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt._id,
       user: user._id,
       decision: true,
-      amount: 50
+      amount: 50,
     });
     await bet.save();
 
@@ -274,7 +276,7 @@ describe('Bet Service Tests', () => {
       promptId: prompt._id,
       user: user._id,
       decision: false,
-      amount: 150
+      amount: 150,
     });
     await bet.save();
 
