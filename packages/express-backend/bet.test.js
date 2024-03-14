@@ -257,6 +257,15 @@ describe('Bet Service Tests', () => {
     });
   });
 
+  test('getBets should correctly retrieve bets filtered by promptId', async () => {
+    const filteredBets = await betService.getBets({ promptId: prompt._id });
+    expect(filteredBets).not.toBeNull();
+    expect(filteredBets.length).toBeGreaterThan(0);
+    filteredBets.forEach(bet => {
+      expect(bet.promptId._id.toString()).toEqual(prompt._id.toString());
+    });
+  });
+
   test('findBetById should retrieve the correct bet', async () => {
     const bet = new betModel({
       promptId: prompt._id,
