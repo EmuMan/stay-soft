@@ -2,7 +2,7 @@ import React from "react";
 import MyBet from "./MyBet.js";
 
 function MyBetsFeed(props) {
-  const myBets = props.bets.map((bet, index) => {
+  const myBets = props.bets.filter((bet) => bet.promptId !== null).map((bet, index) => {
     return (
       <MyBet
         key={index}
