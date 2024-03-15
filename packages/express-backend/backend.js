@@ -70,7 +70,7 @@ app.get("/bets/:id", authenticateUser, async (req, res) => {
 app.get("/prompts", authenticateUser, async (req, res) => {
   const { user } = req.query;
   try {
-    const prompts = await services.getPrompts({ user });
+    const prompts = await services.getPrompts(user);
     res.json(prompts);
   } catch (err) {
     res.status(500).send(err.message);
@@ -155,10 +155,9 @@ app.post("/users/login", async (req, res) => {
 
 app.put("/prompts/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
-  const { closed } = req.body;
 
   services
-    .updatePromptById(id, req.user, closed)
+    .updatePromptById(id, req.user)
     .then((result) => {
       if (result === 204) {
         res.status(204).send();
@@ -203,8 +202,10 @@ app.delete("/bets/:id", authenticateUser, (req, res) => {
 
 app.delete("/prompts/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
+  console.log(req.body);
+  const { result } = req.body;
   services
-    .deletePromptById(id)
+    .deletePromptById(id, result)
     .then((result) => {
       if (result) {
         res.status(204).send();
