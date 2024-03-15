@@ -235,10 +235,6 @@ async function deletePromptById(id, result) {
     throw new Error("Result not found");
   }
 
-  if (!prompt) {
-    throw new Error("Prompt not found");
-  }
-
   prompt.result = result;
   await prompt.save();
 
@@ -258,6 +254,10 @@ async function updatePromptById(id, reqUser, result) {
     throw new Error("User not authorized to update prompt");
   }
 
+  if (oldPrompt.dateClosed <= new Date()) {
+    throw new Error("Prompt already closed");
+  }
+
   return oldPrompt.save();
 }
 
@@ -271,7 +271,7 @@ async function resolveBets(prompt) {
     if (bets[j].decision === prompt.result) {
       const user = await userModel.findById(bets[j].user);
       user.points = user.points + (bets[j].amount / correctPool) * wrongPool + bets[j].amount;
-      console.log(user.points);
+      await bets[j].deleteOne();
       await user.save();
     }
 

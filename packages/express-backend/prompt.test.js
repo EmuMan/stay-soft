@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import promptModel from "./models/prompt";
 import userModel from "./models/user";
+import betModel from "./models/bet";
 import promptService from "./services";
 
 describe('Prompt Service Tests', () => {
@@ -99,7 +100,7 @@ describe('Prompt Service Tests', () => {
   });
 
   test('should correctly retrieve prompts filtered by user', async () => {
-    const filteredPrompts = await promptService.getPrompts({ user: user1._id });
+    const filteredPrompts = await promptService.getPrompts(user1._id);
   
     expect(filteredPrompts.length).toBe(1);
     expect(filteredPrompts[0].user._id.toString()).toEqual(user1._id.toString());
@@ -117,9 +118,109 @@ describe('Prompt Service Tests', () => {
   test('deletePromptById should remove the prompt successfully', async () => {
     const prompts = await promptModel.find();
     const prompt = prompts[0];
-    await promptService.deletePromptById(prompt._id);
+    await promptService.deletePromptById(prompt._id, true);
     const deletedPrompt = await promptModel.findById(prompt._id);
     expect(deletedPrompt).toBeNull();
+  });
+
+  test('deletePromptById should throw an error if the result is undefined', async () => {
+    const prompts = await promptModel.find();
+    const prompt = prompts[0];
+    await expect(promptService.deletePromptById(prompt._id, undefined))
+      .rejects
+      .toThrow('Result not found');
+  });
+
+  test('deletePromptById should resolve bets and delete the prompt, yes resolution', async () => {
+    const prompt = await new promptModel({
+      question: "Sample question?",
+      user: user1._id,
+      category: "Sample Category",
+      dateOpened: new Date(),
+      dateClosed: new Date(),
+      numYes: 1,
+      numNo: 1,
+      yesPool: 100,
+      noPool: 50,
+    }).save();
+
+    const bet1 = await new betModel({
+      promptId: prompt._id,
+      user: user1._id,
+      decision: true,
+      amount: 100,
+    }).save();
+
+    const bet2 = await new betModel({
+      promptId: prompt._id,
+      user: user2._id,
+      decision: false,
+      amount: 50,
+    }).save();
+
+    console.log(user1.points, user2.points);
+
+    await promptService.deletePromptById(prompt._id, true);
+    const deletedPrompt = await promptModel.findById(prompt._id);
+    expect(deletedPrompt).toBeNull();
+
+    const user1After = await userModel.findById(user1._id);
+    expect(user1After.points).toBe(250);
+
+    const user2After = await userModel.findById(user2._id);
+    expect(user2After.points).toBe(150);
+
+    const bet1After = await betModel.findById(bet1._id);
+    expect(bet1After).toBeNull();
+
+    const bet2After = await betModel.findById(bet2._id);
+    expect(bet2After).toBeNull();
+  });
+
+  test('deletePromptById should resolve bets and delete the prompt, no resolution', async () => {
+    const prompt = await new promptModel({
+      question: "Sample question?",
+      user: user1._id,
+      category: "Sample Category",
+      dateOpened: new Date(),
+      dateClosed: new Date(),
+      numYes: 1,
+      numNo: 1,
+      yesPool: 100,
+      noPool: 50,
+    }).save();
+
+    const bet1 = await new betModel({
+      promptId: prompt._id,
+      user: user1._id,
+      decision: true,
+      amount: 100,
+    }).save();
+
+    const bet2 = await new betModel({
+      promptId: prompt._id,
+      user: user2._id,
+      decision: false,
+      amount: 50,
+    }).save();
+
+    console.log(user1.points, user2.points);
+
+    await promptService.deletePromptById(prompt._id, false);
+    const deletedPrompt = await promptModel.findById(prompt._id);
+    expect(deletedPrompt).toBeNull();
+
+    const user1After = await userModel.findById(user1._id);
+    expect(user1After.points).toBe(100);
+
+    const user2After = await userModel.findById(user2._id);
+    expect(user2After.points).toBe(300);
+
+    const bet1After = await betModel.findById(bet1._id);
+    expect(bet1After).toBeNull();
+
+    const bet2After = await betModel.findById(bet2._id);
+    expect(bet2After).toBeNull();
   });
 
   test('updatePromptById should throw an error if the prompt is not found', async () => {
