@@ -118,7 +118,7 @@ describe('Prompt Service Tests', () => {
   test('deletePromptById should remove the prompt successfully', async () => {
     const prompts = await promptModel.find();
     const prompt = prompts[0];
-    await promptService.deletePromptById(prompt._id, true);
+    await promptService.deletePromptById(prompt._id, user1, true);
     const deletedPrompt = await promptModel.findById(prompt._id);
     expect(deletedPrompt).toBeNull();
   });
@@ -126,9 +126,17 @@ describe('Prompt Service Tests', () => {
   test('deletePromptById should throw an error if the result is undefined', async () => {
     const prompts = await promptModel.find();
     const prompt = prompts[0];
-    await expect(promptService.deletePromptById(prompt._id, undefined))
+    await expect(promptService.deletePromptById(prompt._id, user1, undefined))
       .rejects
       .toThrow('Result not found');
+  });
+
+  test('deletePromptById should throw an error if the user does not match', async () => {
+    const prompts = await promptModel.find();
+    const prompt = prompts[0];
+    await expect(promptService.deletePromptById(prompt._id, user2, true))
+      .rejects
+      .toThrow('User not authorized to delete prompt');
   });
 
   test('deletePromptById should resolve bets and delete the prompt, yes resolution', async () => {
@@ -158,9 +166,7 @@ describe('Prompt Service Tests', () => {
       amount: 50,
     }).save();
 
-    console.log(user1.points, user2.points);
-
-    await promptService.deletePromptById(prompt._id, true);
+    await promptService.deletePromptById(prompt._id, user1, true);
     const deletedPrompt = await promptModel.findById(prompt._id);
     expect(deletedPrompt).toBeNull();
 
@@ -204,9 +210,7 @@ describe('Prompt Service Tests', () => {
       amount: 50,
     }).save();
 
-    console.log(user1.points, user2.points);
-
-    await promptService.deletePromptById(prompt._id, false);
+    await promptService.deletePromptById(prompt._id, user1, false);
     const deletedPrompt = await promptModel.findById(prompt._id);
     expect(deletedPrompt).toBeNull();
 
