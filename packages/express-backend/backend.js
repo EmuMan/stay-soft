@@ -18,26 +18,14 @@ app.get("/", authenticateUser, (req, res) => {
   res.send("Backend Landing Screen");
 });
 
-app.get("/users", authenticateUser, async (req, res) => {
-  const { username, email, firstName, lastName } = req.query;
-  try {
-    const users = await services.getUsers({
-      username,
-      email,
-      firstName,
-      lastName,
-    });
-    res.json(users);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
 app.get("/users/:id", authenticateUser, async (req, res) => {
   try {
     const user = await services.findUserById(req.params.id);
     if (!user) {
       return res.status(404).send("User not found");
+    }
+    if (req.user.id !== user.id) {
+      return res.status(403).send("Forbidden");
     }
     res.json(user);
   } catch (err) {
@@ -172,34 +160,6 @@ app.put("/prompts/:id", authenticateUser, (req, res) => {
 
 // DELETES
 
-app.delete("/users/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"];
-  services
-    .deleteUserById(id)
-    .then((result) => {
-      if (result) {
-        res.status(204).send();
-      } else {
-        res.status(404).send("Resource not found.");
-      }
-    })
-    .catch((error) => res.status(500).send(error.message));
-});
-
-app.delete("/bets/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"];
-  services
-    .deleteBetById(id)
-    .then((result) => {
-      if (result) {
-        res.status(204).send();
-      } else {
-        res.status(404).send("Resource not found.");
-      }
-    })
-    .catch((error) => res.status(500).send(error.message));
-});
-
 app.delete("/prompts/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   console.log(req.body);
@@ -216,19 +176,7 @@ app.delete("/prompts/:id", authenticateUser, (req, res) => {
     .catch((error) => res.status(500).send(error.message));
 });
 
-// PATCHES
 
-// for updating user points
-app.patch("/users/:id", authenticateUser, (req, res) => {
-  const { points } = req.body;
-  services.updateUserPointsById(req.params.id, points);
-});
-
-// for closing a prompt
-app.patch("/prompts/:id", authenticateUser, (req, res) => {
-  const { closed, user, result } = req.body;
-  services.updatePromptById(req.params.id, closed, user, result);
-});
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Server running at http://localhost:${port}`);
