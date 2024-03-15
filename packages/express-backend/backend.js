@@ -89,6 +89,9 @@ app.post("/users", authenticateUser, (req, res) => {
 
 app.post("/bets", authenticateUser, async (req, res) => {
   const betToAdd = req.body;
+  if (betToAdd.user !== req.user.id) {
+    return res.status(403).send("Forbidden");
+  }
   services
     .addBet(req.user, betToAdd)
     .then((addedBet) => res.status(201).send(addedBet))
@@ -97,6 +100,9 @@ app.post("/bets", authenticateUser, async (req, res) => {
 
 app.post("/prompts", authenticateUser, async (req, res) => {
   const promptToAdd = req.body;
+  if (promptToAdd.user !== req.user.id) {
+    return res.status(403).send("Forbidden");
+  }
   services
     .addPrompt(promptToAdd)
     .then((addedPrompt) => res.status(201).send(addedPrompt))
@@ -162,10 +168,9 @@ app.put("/prompts/:id", authenticateUser, (req, res) => {
 
 app.delete("/prompts/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
-  console.log(req.body);
   const { result } = req.body;
   services
-    .deletePromptById(id, result)
+    .deletePromptById(id, req.user, result)
     .then((result) => {
       if (result) {
         res.status(204).send();

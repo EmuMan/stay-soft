@@ -228,11 +228,15 @@ function findPromptById(id) {
   return promptModel.findById(id).populate("user");
 }
 
-async function deletePromptById(id, result) {
+async function deletePromptById(id, reqUser, result) {
   const prompt = await promptModel.findById(id);
 
   if (result === undefined) {
     throw new Error("Result not found");
+  }
+
+  if (reqUser.id.toString() !== prompt.user.toString()) {
+    throw new Error("User not authorized to delete prompt");
   }
 
   prompt.result = result;
