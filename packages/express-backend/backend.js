@@ -112,8 +112,6 @@ app.post("/prompts", authenticateUser, async (req, res) => {
 app.post("/users/signup", async (req, res) => {
   const { email, username, firstName, lastName, password } = req.body;
 
-  // Email validation
-
   try {
     const newUser = await services.signupUser(
       email,

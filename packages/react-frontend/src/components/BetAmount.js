@@ -1,6 +1,5 @@
 import { TextField, Stack, Button, InputAdornment } from "@mui/material";
 function BetAmount(decision) {
-  console.log(decision);
   let visibility = "hidden";
   if (decision === "Yes" || decision === "No") {
     visibility = "visible";

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Stack, Button, TextField } from "@mui/material";
-import { Prompt } from "./Prompt.js";
-import Feed from "./Feed.js";
+import { Stack, Button, TextField } from "@mui/material";
 
 function QuestionForm(props){
   
@@ -53,7 +51,6 @@ function QuestionForm(props){
                 name="question"
                 multiline
                 style={{ width: "75%" }}
-                //value={question}
                 onChange={handleChange}
             ></TextField>
             <TextField
@@ -62,7 +59,6 @@ function QuestionForm(props){
                 name="category"
                 multiline
                 style={{ width: "75%" }}
-                //value={category}
                 onChange={handleChange}
             ></TextField>
             <TextField
@@ -71,7 +67,6 @@ function QuestionForm(props){
                 name="date"
                 multiline
                 style={{ width: "75%" }}
-                //value={dateChanged}
                 onChange={handleChange}
             ></TextField>
             <Button variant="contained" type="button" value="Submit" onClick={submitForm} style={{ textTransform: "none" }}>

@@ -53,7 +53,6 @@ const ProfilePage = (props) => {
         alignItems: "center",
       }}
     >
-      {/* User Icon */}
       <Typography variant="h5">{props.profile.username}</Typography>
       <Card style={{ margin: "20px 0", padding: "20px" }}>
         <CardContent>
@@ -62,7 +61,6 @@ const ProfilePage = (props) => {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               minWidth: "320px",
-              // alignItems: "center",
             }}
           >
             <Typography variant="h6">
