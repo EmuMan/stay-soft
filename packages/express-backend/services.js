@@ -216,23 +216,38 @@ function addPrompt(prompt) {
   return newPrompt.save();
 }
 
-function getPrompts(filter = {}) {
+async function getPrompts(user) {
   let queryFilter = {};
-  if (filter.user) {
-    queryFilter.user = filter.user;
+  if (user) {
+    queryFilter.user = user;
   }
-  return promptModel.find(queryFilter).populate("user");
+  return await promptModel.find(queryFilter).populate("user");
 }
 
 function findPromptById(id) {
   return promptModel.findById(id).populate("user");
 }
 
-function deletePromptById(id) {
-  return promptModel.findByIdAndDelete(id);
+async function deletePromptById(id, reqUser, result) {
+  const prompt = await promptModel.findById(id);
+
+  if (result === undefined) {
+    throw new Error("Result not found");
+  }
+
+  if (reqUser.id.toString() !== prompt.user.toString()) {
+    throw new Error("User not authorized to delete prompt");
+  }
+
+  prompt.result = result;
+  await prompt.save();
+
+  await resolveBets(prompt);
+
+  return await prompt.deleteOne();
 }
 
-async function updatePromptById(id, reqUser, closed, result) {
+async function updatePromptById(id, reqUser, result) {
   const oldPrompt = await promptModel.findById(id);
 
   if (!oldPrompt) {
@@ -243,14 +258,29 @@ async function updatePromptById(id, reqUser, closed, result) {
     throw new Error("User not authorized to update prompt");
   }
 
-
   if (oldPrompt.dateClosed <= new Date()) {
     throw new Error("Prompt already closed");
   }
 
-  oldPrompt.dateClosed = new Date();
-  oldPrompt.result = result;
   return oldPrompt.save();
+}
+
+async function resolveBets(prompt) {
+  const bets = await betModel.find({ promptId: prompt._id });
+
+  const correctPool = prompt.result ? prompt.yesPool : prompt.noPool;
+  const wrongPool = prompt.result ? prompt.noPool : prompt.yesPool;
+
+  for (let j = 0; j < bets.length; j++) {
+    if (bets[j].decision === prompt.result) {
+      const user = await userModel.findById(bets[j].user);
+      user.points = user.points + (bets[j].amount / correctPool) * wrongPool + bets[j].amount;
+      await bets[j].deleteOne();
+      await user.save();
+    }
+
+    await betModel.findByIdAndDelete(bets[j]._id);
+  }
 }
 
 // EXPORT
