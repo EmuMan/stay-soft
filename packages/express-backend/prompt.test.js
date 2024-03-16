@@ -5,9 +5,11 @@ import userModel from "./models/user";
 import betModel from "./models/bet";
 import promptService from "./services";
 
+// Testing for all prompt functionality
 describe('Prompt Service Tests', () => {
   let mongoServer;
 
+  // Setup and teardown
   beforeAll(async () => {
     if (mongoose.connection.readyState) {
       await mongoose.disconnect();
@@ -82,6 +84,7 @@ describe('Prompt Service Tests', () => {
     await promptModel.deleteMany({});
   });
 
+  // addPrompt test
   test('addPrompt should add a prompt successfully', async () => {
     const sampleUserId = new mongoose.Types.ObjectId();
     const newPrompt = { question: 'Is water wet', user: sampleUserId, category: 'Finance', dateOpened: new Date() };
@@ -90,6 +93,7 @@ describe('Prompt Service Tests', () => {
     expect(savedPrompt.title).toEqual(newPrompt.title);
   });
 
+  // getPrompts test
   test('getPrompts should retrieve prompts correctly', async () => {
     const prompts = await promptService.getPrompts();
     expect(prompts.length).toBeGreaterThan(0);
@@ -107,6 +111,7 @@ describe('Prompt Service Tests', () => {
     expect(filteredPrompts[0].user.username).toEqual(user1.username);
   });
 
+  // findPromptById test
   test('findPromptById should retrieve the correct prompt', async () => {
     const prompts = await promptModel.find();
     const prompt = prompts[0];
@@ -115,6 +120,7 @@ describe('Prompt Service Tests', () => {
     expect(foundPrompt.title).toEqual(prompt.title);
   });
 
+  // deletePromptById tests
   test('deletePromptById should remove the prompt successfully', async () => {
     const prompts = await promptModel.find();
     const prompt = prompts[0];
@@ -227,6 +233,7 @@ describe('Prompt Service Tests', () => {
     expect(bet2After).toBeNull();
   });
 
+  // updatePromptById tests
   test('updatePromptById should throw an error if the prompt is not found', async () => {
     const nonExistentId = new mongoose.Types.ObjectId();
     const reqUser = { id: new mongoose.Types.ObjectId() };

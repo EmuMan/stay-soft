@@ -5,9 +5,11 @@ import promptModel from "./models/prompt.js";
 import userModel from "./models/user.js";
 import betService from "./services"; 
 
+// Testing for all bet functionality
 describe('Bet Service Tests', () => {
   let mongoServer;
 
+  // Setup and teardown
   beforeAll(async () => {
     if (mongoose.connection.readyState) {
       await mongoose.disconnect();
@@ -97,6 +99,7 @@ describe('Bet Service Tests', () => {
     await userModel.deleteMany({});
   });
 
+  // addBet tests
   test('addBet should add a positive bet successfully', async () => {
     await betModel.deleteMany({});
   
@@ -239,6 +242,7 @@ describe('Bet Service Tests', () => {
       .toThrow("User not authorized to place bet");
   });
 
+  // getBets tests
   test('getBets should retrieve bets correctly', async () => {
     const bets = await betService.getBets();
     expect(bets.length).toBeGreaterThan(0);
@@ -266,6 +270,7 @@ describe('Bet Service Tests', () => {
     });
   });
 
+  // findBetById test
   test('findBetById should retrieve the correct bet', async () => {
     const bet = new betModel({
       promptId: prompt._id,
@@ -280,6 +285,7 @@ describe('Bet Service Tests', () => {
     expect(foundBet._id.toString()).toEqual(bet._id.toString());
   });
 
+  // deleteBetById test
   test('deleteBetById should remove the bet successfully', async () => {
     const bet = new betModel({
       promptId: prompt._id,

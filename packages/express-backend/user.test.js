@@ -5,9 +5,11 @@ import userService from "./services";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// Testing for all user functionality
 describe("User Service Tests", () => {
   let mongoServer;
 
+  // Setup and teardown
   beforeAll(async () => {
     if (mongoose.connection.readyState) {
       await mongoose.disconnect();
@@ -48,6 +50,7 @@ describe("User Service Tests", () => {
     await userModel.deleteMany({});
   });
 
+  // addUser test
   test("addUser should add a user successfully", async () => {
     const user = {
       username: "testUser",
@@ -61,6 +64,7 @@ describe("User Service Tests", () => {
     expect(savedUser.username).toEqual(user.username);
   });
 
+  // getUser tests
   test("getUsers should retrieve users correctly", async () => {
     const users = await userService.getUsers();
     expect(users.length).toBeGreaterThan(0);
@@ -94,6 +98,7 @@ describe("User Service Tests", () => {
     expect(users[0].lastName).toBe("Doe");
   });
 
+  // findUserById test
   test("findUserById should retrieve the correct user", async () => {
     const users = await userModel.find();
     const user = users[0];
@@ -102,6 +107,7 @@ describe("User Service Tests", () => {
     expect(foundUser.username).toEqual(user.username);
   });
 
+  // deleteUserById test
   test("deleteUserById should remove the user successfully", async () => {
     const users = await userModel.find();
     const user = users[0];
@@ -110,6 +116,7 @@ describe("User Service Tests", () => {
     expect(deletedUser).toBeNull();
   });
 
+  // updateUserById tests
   test("updateUserById should update the user details correctly", async () => {
     const users = await userModel.find();
     const user = users[0];
@@ -125,6 +132,7 @@ describe("User Service Tests", () => {
     ).rejects.toThrow("User not found");
   });
 
+  // signupUser tests
   test("signupUser should create a new user", async () => {
     const newUser = {
       email: "newuser@example.com",
@@ -158,6 +166,7 @@ describe("User Service Tests", () => {
     ).rejects.toThrow("User already exists with the given email or username");
   });
 
+  // loginUser tests
   test("loginUser should authenticate the user successfully", async () => {
     const password = "password";
     const saltRounds = 10;
@@ -193,6 +202,7 @@ describe("User Service Tests", () => {
     ).rejects.toThrow("Incorrect password");
   });
 
+  // authenticateUser tests
   test("should respond with 401 if no token is provided", () => {
     const req = {
       headers: {
